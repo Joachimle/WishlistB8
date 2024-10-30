@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <title>Opret bruger</title>
+</head>
+<body>
+<h1>Opret bruger</h1>
+<form th:action="@{/save_user}" th:object="${userProfile}" method="post">
+    <label for="username">Indtast nyt brugernavn:</label>
+    <input id="username" th:field="*{username}">
+    <label for="password">Indtast ny adgangskode:</label>
+    <input id="password" type="password" th:field="*{username}">
+    <button type="submit">Opret</button>
+</form>
+<a th:href="@{/}"><button>Fortryd</button></a>
+</body>
+</html>

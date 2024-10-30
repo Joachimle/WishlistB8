@@ -11,6 +11,7 @@ public class UserProfileService {
 
     public UserProfileService(UserProfileRepository userProfileRepository) {
         this.userProfileRepository = userProfileRepository;
+        // Måske skal denne constructor laves om som i Ians pdf "Interface DI IoC" side 17
     }
 
     public void createUserProfile(UserProfile userProfile) {

@@ -6,6 +6,6 @@ public interface UserProfileRepository {
 
 
 //    void deleteUser();
-//    void editUser();
-//    void viewUser();
+//    void updateUser();
+//    void readUser();
 }
