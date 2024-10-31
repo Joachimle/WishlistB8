@@ -7,7 +7,15 @@
 </head>
 
 <body>
-<a th:href="@{/create_user}"><button>Opret Bruger</button>
+<a th:href="@{/create_user}"><button>Opret bruger</button>
 </a>
+<br>
+<form th:action="@{/login}" th:object="${userProfile}" method="post">
+    <label>Brugernavn:</label>
+    <input th:field="*{username}">
+    <label>Adgangskode:</label>
+    <input th:field="*{password}" type="password">
+    <button type="submit">Log ind</button>
+</form>
 </body>
 </html>
