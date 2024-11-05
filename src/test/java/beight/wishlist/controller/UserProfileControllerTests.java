@@ -42,4 +42,19 @@ class UserProfileControllerTests {
                 .andExpect(view().name("redirect:/"));
     }
 
+    @Test
+    void homePage() throws Exception {
+        mockMvc.perform(get("/homepage"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("frontpage"));
+        //TODO undersøg hvordan man laver test af at man er logget ind
+    }
+
+    @Test
+    void login() throws Exception {
+        mockMvc.perform(post("/login").param("username", "test").param("password", "test"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+    }
+
 }

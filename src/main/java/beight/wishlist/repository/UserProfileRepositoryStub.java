@@ -8,7 +8,8 @@ import java.util.List;
 @Repository("USERPROFILE_REPOSITORY_STUB")
 public class UserProfileRepositoryStub implements UserProfileRepository {
 
-    private List<UserProfile> users = new ArrayList<>();
+    //hardcode til brug af test
+    private List<UserProfile> users = new ArrayList<>(List.of(new UserProfile("test","test")));
 
     @Override
     public void createUserProfile(String username, String password) {
