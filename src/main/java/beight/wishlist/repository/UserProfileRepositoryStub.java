@@ -8,11 +8,22 @@ import java.util.List;
 @Repository("USERPROFILE_REPOSITORY_STUB")
 public class UserProfileRepositoryStub implements UserProfileRepository {
 
-    private List<UserProfile> users = new ArrayList<>();
+    //hardcode til brug af test
+    private List<UserProfile> users = new ArrayList<>(List.of(new UserProfile("test","test")));
 
     @Override
-    public void createUser(String username, String password) {
+    public void createUserProfile(String username, String password) {
         users.add(new UserProfile(username, password));
+    }
+
+    @Override
+    public UserProfile readUserProfile(String username) {
+        for (UserProfile userProfile : users) {
+            if (userProfile.getUsername().equals(username)) {
+                return userProfile;
+            }
+        }
+        return null;
     }
 
 }
