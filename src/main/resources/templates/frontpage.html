@@ -10,11 +10,11 @@
 <a th:href="@{/create_user}"><button>Opret bruger</button>
 </a>
 <br>
-<form th:action="@{/login}" th:object="${userProfile}" method="post">
+<form th:action="@{/login}" method="post">
     <label>Brugernavn:</label>
-    <input th:field="*{username}">
+    <input name="username">
     <label>Adgangskode:</label>
-    <input th:field="*{password}" type="password">
+    <input name="password" type="password">
     <button type="submit">Log ind</button>
 </form>
 </body>

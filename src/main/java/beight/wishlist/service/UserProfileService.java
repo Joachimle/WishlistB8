@@ -15,6 +15,14 @@ public class UserProfileService {
     }
 
     public void createUserProfile(UserProfile userProfile) {
-        userProfileRepository.createUser(userProfile.getUsername(), userProfile.getPassword());
+        userProfileRepository.createUserProfile(userProfile.getUsername(), userProfile.getPassword());
+    }
+
+    public boolean login(String username, String password) {
+        UserProfile userProfile = userProfileRepository.readUserProfile(username);
+        if (userProfile != null) {
+            return userProfile.getPassword().equals(password);
+        }
+        return false;
     }
 }
