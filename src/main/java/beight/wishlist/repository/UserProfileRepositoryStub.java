@@ -26,4 +26,9 @@ public class UserProfileRepositoryStub implements UserProfileRepository {
         return null;
     }
 
+    @Override
+    public void updateUsername(String oldUsername, String newUsername) {
+        readUserProfile(oldUsername).setUsername(newUsername);
+    }
+
 }

@@ -25,4 +25,8 @@ public class UserProfileService {
         }
         return false;
     }
+
+    public void updateUsername(String oldUsername, String newUsername) {
+        userProfileRepository.updateUsername(oldUsername, newUsername);
+    }
 }

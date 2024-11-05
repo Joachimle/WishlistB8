@@ -32,11 +32,20 @@ public class UserProfileController {
 
     @GetMapping("/homepage")
     public String homepage(Model model, HttpSession session) {
-        if (session.getAttribute("user") == null) {
+        if (isNotLoggedIn(session)) {
             return "frontpage";
         }
         model.addAttribute("username", session.getAttribute("user"));
         return "userpage";
+    }
+
+    @GetMapping("/update_username")
+    public String updateUsername(Model model, HttpSession session) {
+        if (isNotLoggedIn(session)) {
+            return "frontpage";
+        }
+        model.addAttribute("username", session.getAttribute("user"));
+        return "update_username";
     }
 
     @PostMapping("/save_user")
@@ -52,5 +61,19 @@ public class UserProfileController {
             return "redirect:/homepage";
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/save_username")
+    public String saveUsername(@RequestParam("username") String username, HttpSession session) {
+        if (isNotLoggedIn(session)) {
+            return "redirect:/";
+        }
+        userProfileService.updateUsername((String) session.getAttribute("user"), username);
+        session.setAttribute("user", username);
+        return "redirect:/homepage";
+    }
+
+    private boolean isNotLoggedIn(HttpSession session) {
+        return session.getAttribute("user") == null;
     }
 }
