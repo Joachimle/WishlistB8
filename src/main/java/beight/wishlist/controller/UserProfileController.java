@@ -39,6 +39,25 @@ public class UserProfileController {
         return "userpage";
     }
 
+    @GetMapping("/update_password")
+    public String updatePassword(Model model, HttpSession session) {
+        if(isNotLoggedIn(session)){
+            return "frontpage";
+        }
+        model.addAttribute("password", session.getAttribute("password"));
+        return "update_password";
+    }
+
+    @PostMapping("/save_password")
+    public String savePassword(@RequestParam("new_password") String password, HttpSession session){
+        if(isNotLoggedIn(session)){
+            return "redirect:/";
+        }
+        userProfileService.updatePassword((String) session.getAttribute("password"), password);
+        session.setAttribute("password", password);
+        return "redirect:/homepage";
+    }
+
     @PostMapping("/save_user")
     public String saveUser(@ModelAttribute UserProfile userProfile) {
         userProfileService.createUserProfile(userProfile);
@@ -49,8 +68,13 @@ public class UserProfileController {
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
         if(userProfileService.login(username, password)){
             session.setAttribute("user", username);
+            session.setAttribute("password", password);
             return "redirect:/homepage";
         }
         return "redirect:/";
+    }
+
+    private boolean isNotLoggedIn(HttpSession session){
+        return session.getAttribute("user") == null;
     }
 }

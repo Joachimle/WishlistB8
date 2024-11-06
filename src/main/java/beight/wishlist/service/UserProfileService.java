@@ -25,4 +25,8 @@ public class UserProfileService {
         }
         return false;
     }
+
+    public void updatePassword(String oldPassword, String newPassword) {
+        userProfileRepository.updatePassword(oldPassword,newPassword);
+    }
 }
