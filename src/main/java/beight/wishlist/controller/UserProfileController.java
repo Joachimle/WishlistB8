@@ -33,7 +33,7 @@ public class UserProfileController {
     @GetMapping("/homepage")
     public String homepage(@RequestParam(defaultValue = "") String message, Model model, HttpSession session) {
         if (isNotLoggedIn(session)) {
-            return "frontpage";
+            return "redirect:/";
         }
         model.addAttribute("message", message);
         model.addAttribute("username", session.getAttribute("user"));
@@ -94,6 +94,12 @@ public class UserProfileController {
             session.setAttribute("user", username);
         }
         return "redirect:/homepage" + "?message=" + message;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/" + "?message=Logget ud.";
     }
 
     private boolean isNotLoggedIn(HttpSession session) {
