@@ -8,7 +8,8 @@ public interface UserProfileRepository {
 
     UserProfile readUserProfile(String username);
 
+    void updateUsername(String oldUsername, String newUsername);
+
 
 //    void deleteUser();
-//    void updateUser();
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <title>Opdater brugernavn</title>
+</head>
+<body>
+    <form action="/save_username" method="post">
+        <label>Brugernavn:</label>
+        <input name="username" th:value="${username}">
+        <button type="submit">Gem</button>
+    </form>
+    <a href="/homepage">
+        <button>Fortryd</button>
+    </a>
+
+</body>
+</html>
