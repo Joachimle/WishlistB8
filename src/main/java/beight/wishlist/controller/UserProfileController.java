@@ -20,21 +20,22 @@ public class UserProfileController {
     }
 
     @GetMapping("/")
-    public String frontpage() {
+    public String frontpage(@RequestParam(defaultValue = "") String message, Model model) {
+        model.addAttribute("message", message);
         return "frontpage";
     }
 
     @GetMapping("/create_user")
-    public String createUser(Model model) {
-        model.addAttribute("userProfile", new UserProfile());
+    public String createUser() {
         return "create_user";
     }
 
     @GetMapping("/homepage")
-    public String homepage(Model model, HttpSession session) {
+    public String homepage(@RequestParam(defaultValue = "") String message, Model model, HttpSession session) {
         if (isNotLoggedIn(session)) {
             return "frontpage";
         }
+        model.addAttribute("message", message);
         model.addAttribute("username", session.getAttribute("user"));
         return "userpage";
     }
@@ -49,9 +50,9 @@ public class UserProfileController {
     }
 
     @PostMapping("/save_user")
-    public String saveUser(@ModelAttribute UserProfile userProfile) {
-        userProfileService.createUserProfile(userProfile);
-        return "redirect:/"; // TODO: redirect til login? homepage? bekræftelsesside?
+    public String saveUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+        String message = userProfileService.createUserProfile(username, password);
+        return "redirect:/" + "?message=" + message;
     }
 
     @PostMapping("/login")
@@ -68,9 +69,11 @@ public class UserProfileController {
         if (isNotLoggedIn(session)) {
             return "redirect:/";
         }
-        userProfileService.updateUsername((String) session.getAttribute("user"), username);
-        session.setAttribute("user", username);
-        return "redirect:/homepage";
+        String message = userProfileService.updateUsername((String) session.getAttribute("user"), username);
+        if (message.equals("Brugernavn ændret.")) {
+            session.setAttribute("user", username);
+        }
+        return "redirect:/homepage" + "?message=" + message;
     }
 
     private boolean isNotLoggedIn(HttpSession session) {

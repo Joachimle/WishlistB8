@@ -14,8 +14,15 @@ public class UserProfileService {
         // Måske skal denne constructor laves om som i Ians pdf "Interface DI IoC" side 17
     }
 
-    public void createUserProfile(UserProfile userProfile) {
-        userProfileRepository.createUserProfile(userProfile.getUsername(), userProfile.getPassword());
+    public String createUserProfile(String username, String password) {
+        if (username == null || username.isBlank()) {
+            return "Brugernavn var tomt.";
+        } else if (userProfileRepository.readUserProfile(username) == null) {
+            userProfileRepository.createUserProfile(username, password);
+            return "Bruger oprettet.";
+        } else {
+            return "Brugernavn findes allerede.";
+        }
     }
 
     public boolean login(String username, String password) {
@@ -26,7 +33,16 @@ public class UserProfileService {
         return false;
     }
 
-    public void updateUsername(String oldUsername, String newUsername) {
-        userProfileRepository.updateUsername(oldUsername, newUsername);
+    public String updateUsername(String oldUsername, String newUsername) {
+        if (newUsername == null || newUsername.isBlank()) {
+            return "Brugernavn var tomt.";
+        } else if (oldUsername.equals(newUsername)) {
+            return "Nyt brugernavn var magen til gamle brugernavn.";
+        } else if (userProfileRepository.readUserProfile(newUsername) == null) {
+            userProfileRepository.updateUsername(oldUsername, newUsername);
+            return "Brugernavn ændret.";
+        } else {
+            return "Brugernavn findes allerede.";
+        }
     }
 }
