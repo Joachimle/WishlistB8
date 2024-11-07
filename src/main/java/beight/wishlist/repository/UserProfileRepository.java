@@ -8,6 +8,8 @@ public interface UserProfileRepository {
 
     UserProfile readUserProfile(String username);
 
+    void updateUsername(String oldUsername, String newUsername);
+
     UserProfile readUserProfileByPassword(String password);
 
     void updatePassword(String oldPassword, String newPassword);

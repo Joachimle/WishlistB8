@@ -43,4 +43,9 @@ public class UserProfileRepositoryStub implements UserProfileRepository {
         //readUserProfileByPassword(oldPassword).setPassword(newPassword);
     }
 
+    @Override
+    public void updateUsername(String oldUsername, String newUsername) {
+        readUserProfile(oldUsername).setUsername(newUsername);
+    }
+
 }
