@@ -27,6 +27,23 @@ public class UserProfileRepositoryStub implements UserProfileRepository {
     }
 
     @Override
+    public UserProfile readUserProfileByPassword(String password) {
+        for (UserProfile userProfile : users) {
+            if (userProfile.getPassword().equals(password)) {
+                return userProfile;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePassword(String oldPassword, String newPassword) {
+        UserProfile userProfile = readUserProfileByPassword(oldPassword);
+        userProfile.setPassword(newPassword);
+        //readUserProfileByPassword(oldPassword).setPassword(newPassword);
+    }
+
+    @Override
     public void updateUsername(String oldUsername, String newUsername) {
         readUserProfile(oldUsername).setUsername(newUsername);
     }

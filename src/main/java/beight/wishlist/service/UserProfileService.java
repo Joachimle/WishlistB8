@@ -45,4 +45,8 @@ public class UserProfileService {
             return "Brugernavn findes allerede.";
         }
     }
+
+    public void updatePassword(String oldPassword, String newPassword) {
+        userProfileRepository.updatePassword(oldPassword,newPassword);
+    }
 }

@@ -10,6 +10,11 @@ public interface UserProfileRepository {
 
     void updateUsername(String oldUsername, String newUsername);
 
+    UserProfile readUserProfileByPassword(String password);
+
+    void updatePassword(String oldPassword, String newPassword);
+
 
 //    void deleteUser();
+
 }
