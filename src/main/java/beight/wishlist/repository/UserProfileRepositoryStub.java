@@ -44,6 +44,17 @@ public class UserProfileRepositoryStub implements UserProfileRepository {
     }
 
     @Override
+    public void deleteUserProfile(String username) {
+        users.forEach(System.out::println);
+        UserProfile userProfile = readUserProfile(username);
+        if (userProfile == null) {
+            System.out.println("User not found");
+        }
+        users.remove(userProfile);
+        users.forEach(System.out::println);
+    }
+
+    @Override
     public void updateUsername(String oldUsername, String newUsername) {
         readUserProfile(oldUsername).setUsername(newUsername);
     }

@@ -14,7 +14,6 @@ public interface UserProfileRepository {
 
     void updatePassword(String oldPassword, String newPassword);
 
-
-//    void deleteUser();
+    void deleteUserProfile(String username);
 
 }

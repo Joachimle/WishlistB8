@@ -58,6 +58,25 @@ public class UserProfileController {
         return "update_password";
     }
 
+    @GetMapping("/delete_user")
+    public String deleteUser(HttpSession session) {
+        if (isNotLoggedIn(session)) {
+            return "frontpage";
+        }
+        return "delete_user";
+    }
+
+    @GetMapping("/delete_user_confirmation")
+    public String deleteUserConfirmation(HttpSession session) {
+        if (!isNotLoggedIn(session)) {
+            String username = (String) session.getAttribute("user");
+            System.out.println(username);
+            userProfileService.deleteUserProfile(username);
+        }
+        session.setAttribute("user", null);
+        return "redirect:/";
+    }
+
     @PostMapping("/save_password")
     public String savePassword(@RequestParam("new_password") String password, HttpSession session){
         if(isNotLoggedIn(session)){

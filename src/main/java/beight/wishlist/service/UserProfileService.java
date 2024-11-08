@@ -49,4 +49,8 @@ public class UserProfileService {
     public void updatePassword(String oldPassword, String newPassword) {
         userProfileRepository.updatePassword(oldPassword,newPassword);
     }
+
+    public void deleteUserProfile(String username) {
+        userProfileRepository.deleteUserProfile(username);
+    }
 }
