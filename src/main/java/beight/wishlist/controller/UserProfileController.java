@@ -120,10 +120,8 @@ public class UserProfileController {
     private String takeDanishMessage(HttpSession session) {
         ServiceMessage message = (ServiceMessage) session.getAttribute("message");
         if (message == null) return "";
-        else {
-            session.setAttribute("message", null);
-            return message.dansk;
-        }
+        session.setAttribute("message", null);
+        return message.dansk;
     }
 
     private String getUsername(HttpSession session) {
