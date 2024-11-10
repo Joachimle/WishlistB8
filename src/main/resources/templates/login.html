@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main.css">
+    <title>Log ind</title>
+</head>
+<body>
+
+<h1>Log ind</h1>
+<p class="error" th:text="${message}"></p>
+<form action="/logget-ind" method="post">
+    <label>Brugernavn:  </label><input name="username" autofocus><br>
+    <label>Adgangskode: </label><input name="password" type="password"><br>
+    <button type="submit">Log ind</button>
+</form>
+<hr>
+<a href="/"><button>Fortryd</button></a>
+
+</body>
+</html>

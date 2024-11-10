@@ -4,16 +4,18 @@ import beight.wishlist.model.UserProfile;
 
 public interface UserProfileRepository {
 
-    void createUserProfile(String username, String password);
+    UserProfile createUserProfile(String username, String password); // Returner null hvis det ikke lykkes at oprette.
 
-    UserProfile readUserProfile(String username);
+    Boolean readIfUsernameExists(String username); // Returner null hvis der er sket en fejl.
 
-    void updateUsername(String oldUsername, String newUsername);
+    UserProfile readUserProfileByUsername(String username); // Returner null hvis der ikke var en brugerprofil med det brugernavn.
 
-    UserProfile readUserProfileByPassword(String password);
+    UserProfile readUserProfileByUserID(int userID); // Returner null hvis der ikke var en brugerprofil med det brugerID.
 
-    void updatePassword(String oldPassword, String newPassword);
+    UserProfile updateUsername(int userID, String newUsername); // Returner null hvis det ikke lykkes at ændre.
 
-    void deleteUserProfile(String username);
+    UserProfile updatePassword(int userID, String newPassword); // Returner null hvis det ikke lykkes at ændre.
+
+    boolean deleteUserProfile(int userID);
 
 }
