@@ -12,7 +12,7 @@ public class UserProfileRepositoryStub implements UserProfileRepository {
 
     public UserProfileRepositoryStub() {
         userProfiles = new ArrayList<>();
-        createUserProfile("testU", "testP");
+        createUserProfile("t", "t");
     }
 
     @Override
