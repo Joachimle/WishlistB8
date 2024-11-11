@@ -12,6 +12,7 @@
 <a href="/min-side"><button>Tilbage til min side</button></a>
 <a th:href="@{'/onskelister/' + ${wishList.wishListID} + '/tilfoj-onske'}"><button>Tilføj ønske</button></a>
 <p th:if="${wishes.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
+<hr th:unless="${wishes.isEmpty}">
 <div th:each="wish : ${wishes}">
     <h2 th:text="${wish.title}"></h2>
     <div th:if="${wish.price > 1}" th:text="${wish.price + ' kr.'}"></div>

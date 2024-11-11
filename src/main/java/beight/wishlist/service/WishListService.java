@@ -21,7 +21,7 @@ public class WishListService {
     public boolean createWishList(HttpSession session, String title, String description) {
         // Titel må ikke være tom osv.
         UserProfile userProfile = (UserProfile) session.getAttribute("userProfile");
-        return wishListRepository.createWishList(userProfile.userID(), title, description);
+        return wishListRepository.createWishList(userProfile.userID(), title.isEmpty() ? "Ønskeliste uden titel" : title, description);
     }
 
     public boolean createWish(int wishListID, String title, String price, String link, String description) {
@@ -29,7 +29,7 @@ public class WishListService {
         try {
             priceAsInt = Integer.parseInt(price);
         } catch (NumberFormatException _) {}
-        return wishListRepository.createWish(wishListID, title, priceAsInt, link, description);
+        return wishListRepository.createWish(wishListID, title.isEmpty() ? "Ønske uden titel" : title, priceAsInt, link, description);
     }
 
     public List<WishList> readWishLists(HttpSession session) {
