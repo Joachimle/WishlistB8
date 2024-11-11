@@ -15,5 +15,6 @@ public class WishList {
     }
 
     public void add(Wish newWish) {
+        wishes.add(newWish);
     }
 }

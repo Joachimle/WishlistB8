@@ -3,9 +3,9 @@ package beight.wishlist.controller;
 import beight.wishlist.model.UserProfile;
 import beight.wishlist.model.WishList;
 import beight.wishlist.service.WishListService;
+import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,10 +29,11 @@ public class WishListController {
     }
 
     @GetMapping("/se-oenskeliste")
-    public String viewWishList(HttpSession session) {
+    public String viewWishList(HttpSession session, Model model) {
         if(isNotLoggedIn(session)){
             return "redirect:/";
         }
+        model.addAttribute("wishList", ((WishList) session.getAttribute("wishList")).getWishes());
         return "wishlist";
     }
 

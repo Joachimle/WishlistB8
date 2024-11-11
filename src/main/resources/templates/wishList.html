@@ -9,7 +9,20 @@
     <h1>Min Ønskeliste</h1>
     <a href="/opret-oenske"><button>Tilføj Ønske</button></a>
 
-
+    <table>
+        <tr>
+            <th>Navn</th>
+            <th>Pris</th>
+            <th>Link</th>
+            <th>Beskrivelse</th>
+        </tr>
+        <tr th:each="wish : ${wishList}">
+            <td th:text="${wish.wishName}"></td>
+            <td th:text="${wish.wishPrice}"></td>
+            <td th:text="${wish.wishLink}"></td>
+            <td th:text="${wish.wishDescription}"></td>
+        </tr>
+    </table>
 
 
 

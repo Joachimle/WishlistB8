@@ -1,6 +1,7 @@
 package beight.wishlist.service;
 
 import beight.wishlist.model.UserProfile;
+import beight.wishlist.model.WishList;
 import beight.wishlist.repository.UserProfileRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,7 @@ public class UserProfileService {
                 else {
                     session.setAttribute("message", LOGIN_SUCCESSFUL);
                     session.setAttribute("userProfile", userProfile);
+                    session.setAttribute("wishList", new WishList());
                     return true;
                 }
             }
