@@ -36,7 +36,6 @@ public class WishListRepositoryStub implements WishListRepository {
     @Override
     public boolean createWish(int wishListID, String title, int price, String link, String description) {
         List<Wish> wishes = wishListToWishes.get(wishListID);
-        System.out.println(price + link);
         return wishes.add(new Wish(nextWish++, title, price, link, description));
     }
 
