@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main.css">
+    <title>Tilføj Ønske</title>
+</head>
+<body>
+    <h1>Tilføj Ønske</h1>
+    <p class="error" th:text="${message}"></p>
+    <form action="/oenske-oprettet" method="post">
+        <label>Navn: </label><input name="wishName" autofocus><br>
+        <label>Pris: </label><input name="wishPrice"><br>
+        <label>Link: </label><input name="wishLink"><br>
+        <label>Beskrivelse: </label><textarea name="wishDescription"></textarea><br>
+        <button type="submit">Gem</button>
+    </form>
+    <hr>
+    <a href="/se-oenskeliste"><button>Fortryd</button></a>
+</body>
+</html>
