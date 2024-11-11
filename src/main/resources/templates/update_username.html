@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="da" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/main.css}">
-    <title>Opdater brugernavn</title>
+    <link rel="stylesheet" href="/main.css">
+    <title>Skift brugernavn</title>
 </head>
 <body>
-    <form action="/save_username" method="post">
-        <label>Brugernavn:</label>
-        <input name="username" th:value="${username}">
-        <button type="submit">Gem</button>
-    </form>
-    <a href="/homepage">
-        <button>Fortryd</button>
-    </a>
+
+<h1>Skift brugernavn</h1>
+<p>Er du sikker på, at du vil ændre dit brugernavn? Gamle links til dine ønskelister vil holde op med at virke.</p>
+<p class="error" th:text="${message}"></p>
+<form action="/brugernavn-skiftet" method="post">
+    <label>Nye brugernavn: </label><input name="newUsername" th:value="${oldUsername}" autofocus><br>
+    <label>Adgangskode:    </label><input name="password" type="password"><br>
+    <button type="submit">Gem</button>
+</form>
+<hr>
+<a href="/min-side"><button>Fortryd</button></a>
 
 </body>
 </html>

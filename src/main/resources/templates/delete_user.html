@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="da" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" href="/main.css">
     <title>Slet bruger</title>
 </head>
+
 <body>
-    <p>Er du sikker på, at du ønsker at slette din bruger? Al din data vil gå tabt.</p>
-    <a href="/delete_user_confirmation">
-      <button>Slet bruger</button>
-    </a>
-    <a href="/homepage">
-      <button>Fortryd</button>
-    </a>
+
+<h1>Skift brugernavn</h1>
+<p>Er du sikker på, at du vil slette din bruger? Al din data vil gå tabt.</p>
+<p class="error" th:text="${message}"></p>
+<form action="/bruger-slettet" method="post">
+    <label>Adgangskode: </label><input name="password" type="password" autofocus><br>
+    <button type="submit">Slet permanent</button>
+</form>
+<hr>
+<a href="/min-side"><button>Fortryd</button></a>
+
 </body>
 </html>

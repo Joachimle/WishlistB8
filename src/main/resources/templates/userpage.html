@@ -2,24 +2,16 @@
 <html lang="da" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/main.css}">
-    <title>Brugerside</title>
+    <link rel="stylesheet" href="/main.css">
+    <title>Min side</title>
 </head>
 <body>
-    <p th:text="${message}"></p>
-    <p th:text="${username}"></p>
-    <a href="/update_username">
-        <button>Rediger brugernavn</button>
-    </a>
-    <p th:text="${password}"></p>
-    <a href="/update_password">
-        <button>Rediger password</button>
-    </a>
-    <a href="/logout">
-        <button>Log ud</button>
-    </a>
-    <a href="/delete_user">
-        <button>Slet bruger</button>
-    </a>
+
+<h1 th:text="'Velkommen ' + ${username}"></h1>
+<a href="/skift-brugernavn"><button>Skift brugernavn</button></a>
+<a href="/skift-adgangskode"><button>Skift adgangskode</button></a>
+<a href="/slet-bruger"><button>Slet bruger</button></a>
+<a href="/log-ud"><button>Log ud</button></a>
+
 </body>
 </html>

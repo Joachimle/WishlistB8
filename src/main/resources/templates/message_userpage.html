@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/main.css">
-    <title>Forside</title>
+    <title>Besked</title>
 </head>
-
 <body>
 
-<h1>Velkommen til Ønskeskyen</h1>
-<a href="/opret-bruger"><button>Opret bruger</button></a>
-<hr>
-<a href="/log-ind"><button>Log ind</button></a>
+<p th:text="${message}"></p>
+<a href="/min-side"><button>Gå til min side</button></a>
 
 </body>
 </html>
