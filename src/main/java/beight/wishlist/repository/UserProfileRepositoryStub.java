@@ -9,15 +9,17 @@ import java.util.List;
 public class UserProfileRepositoryStub implements UserProfileRepository {
 
     private final List<UserProfile> userProfiles;
+    private int next;
 
     public UserProfileRepositoryStub() {
         userProfiles = new ArrayList<>();
+        next = 0;
         createUserProfile("t", "t");
     }
 
     @Override
     public UserProfile createUserProfile(String username, String password) {
-        UserProfile newUserProfile = new UserProfile(userProfiles.size(), username, password);
+        UserProfile newUserProfile = new UserProfile(next++, username, password);
         userProfiles.add(newUserProfile);
         return newUserProfile;
     }

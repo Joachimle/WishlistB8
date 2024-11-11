@@ -1,20 +1,10 @@
 package beight.wishlist.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
-public class WishList {
-    List<Wish> wishes;
-
-    public WishList() {
-        this.wishes = new ArrayList<>();
-    }
-
-    public List<Wish> getWishes() {
-        return wishes;
-    }
-
-    public void add(Wish newWish) {
-        wishes.add(newWish);
+public record WishList(int wishListID, String title, String description) {
+    public WishList {
+        Objects.requireNonNull(title);
+        Objects.requireNonNull(description);
     }
 }

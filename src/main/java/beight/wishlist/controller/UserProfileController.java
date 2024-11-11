@@ -37,13 +37,6 @@ public class UserProfileController {
         return "create_user";
     }
 
-    @GetMapping("/min-side")
-    public String homepage(HttpSession session, Model model) {
-        if (isNotLoggedIn(session)) return "redirect:/";
-        model.addAttribute("username", getUsername(session));
-        return "userpage";
-    }
-
     @GetMapping("/skift-brugernavn")
     public String updateUsernamePage(HttpSession session, Model model) {
         if (isNotLoggedIn(session)) return "redirect:/";

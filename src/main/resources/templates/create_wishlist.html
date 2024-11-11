@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main.css">
+    <title>Opret ønskeliste</title>
+</head>
+<body>
+
+<h1>Opret ønskeliste</h1>
+<p class="error" th:text="${message}"></p>
+<form action="/onskeliste-oprettet" method="post">
+    <label>Titel: </label><input name="title" autofocus><br>
+    Beskrivelse:<br><textarea name="description"></textarea><br>
+    <button type="submit">Gem</button>
+</form>
+<hr>
+<a href="/min-side"><button>Fortryd</button></a>
+
+</body>
+</html>
