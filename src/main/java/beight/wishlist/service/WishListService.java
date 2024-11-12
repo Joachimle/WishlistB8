@@ -72,8 +72,23 @@ public class WishListService {
         return wishListRepository.updateWish(wishID, title.isEmpty() ? "Ønske uden titel" : title, priceAsInt, link, description);
     }
 
-    public boolean deleteWishList(int wishListID, boolean confirm) {
-        if (confirm) return wishListRepository.deleteWishList(wishListID);
+    public boolean deleteWishList(HttpSession session, int wishListID, boolean confirm) {
+        if (confirm) {
+            if (wishListRepository.deleteWishList(wishListID)) return true;
+            session.setAttribute("message", ServiceMessage.UNEXPECTED_OUTPUT);
+            return false;
+        }
+        session.setAttribute("message", ServiceMessage.DELETION_NOT_CONFIRMED);
+        return false;
+    }
+
+    public boolean deleteWish(HttpSession session, int wishID, boolean confirm) {
+        if (confirm) {
+            if (wishListRepository.deleteWish(wishID)) return true;
+            session.setAttribute("message", ServiceMessage.UNEXPECTED_OUTPUT);
+            return false;
+        }
+        session.setAttribute("message", ServiceMessage.DELETION_NOT_CONFIRMED);
         return false;
     }
 }

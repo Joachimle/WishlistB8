@@ -24,6 +24,7 @@ public enum ServiceMessage {
 
     // Delete
     USER_DELETED("Brugeren blev slettet."),
+    DELETION_NOT_CONFIRMED("Sletning skal bekræftes."),
 
     // Error
     UNEXPECTED_INPUT("Der opstod en uventet fejl på webserveren."), // Fejl fra controller

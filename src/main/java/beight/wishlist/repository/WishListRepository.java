@@ -28,4 +28,6 @@ public interface WishListRepository {
     boolean updateWish(int wishID, String title, int price, String link, String description);
 
     boolean deleteWishList(int wishListID);
+
+    boolean deleteWish(int wishID);
 }

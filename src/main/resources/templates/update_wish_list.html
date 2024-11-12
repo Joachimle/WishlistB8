@@ -8,7 +8,6 @@
 <body>
 
 <h1>Rediger ønskeliste</h1>
-<p class="error" th:text="${message}"></p>
 <form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/onskeliste-redigeret'}" method="post">
     <label>Titel: </label><input name="title" th:value="${wishList.title}" autofocus><br>
     Beskrivelse:<br><textarea name="description" th:text="${wishList.description}"></textarea><br>
@@ -16,9 +15,10 @@
 </form>
 <hr>
 <a th:href="@{'/onskelister/' + ${wishList.wishListID}}"><button>Fortryd</button></a>
-
-<form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/slet-onskeliste'}" method="post">
-    <label>Bekræft sletning<input type="checkbox" name="confirm"></label>
+<hr>
+<p class="error" th:text="${message}"></p>
+<form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/slet'}" method="post">
+    <label>Bekræft sletning: </label><input type="checkbox" name="confirm"><br>
     <button type="submit">Slet ønskeliste</button>
 </form>
 
