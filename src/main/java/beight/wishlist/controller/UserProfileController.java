@@ -101,7 +101,7 @@ public class UserProfileController {
 
     @GetMapping("/log-ud")
     public String logout(HttpSession session, Model model) {
-        model.addAttribute("message", "Der blev logget ud.");
+        model.addAttribute("message", ServiceMessage.LOGGED_OUT.dansk);
         session.invalidate();
         return "message_frontpage";
     }

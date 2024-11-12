@@ -6,9 +6,12 @@ public enum ServiceMessage {
     LOGIN_SUCCESSFUL(""),
     USER_NOT_FOUND("Der var ingen bruger med det brugernavn."),
     PASSWORD_INCORRECT("Adgangskoden var forkert."),
+    LOGGED_OUT("Der blev logget ud."),
 
     // Create
     USER_CREATED(""),
+    NO_TITLE_WISH_LIST("Ønskeliste uden titel"),
+    NO_TITLE_WISH("Ønske uden titel"),
 
     // Update
     USERNAME_UPDATED(""),

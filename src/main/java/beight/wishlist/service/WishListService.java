@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static beight.wishlist.service.ServiceMessage.*;
+
 @Service
 public class WishListService {
 
@@ -61,7 +63,7 @@ public class WishListService {
     }
 
     public boolean updateWishList(int wishListID, String title, String description) {
-        return wishListRepository.updateWishList(wishListID, title.isEmpty() ? "Ønskeliste uden titel" : title, description);
+        return wishListRepository.updateWishList(wishListID, title.isEmpty() ? NO_TITLE_WISH_LIST.dansk : title, description);
     }
 
     public boolean updateWish(int wishID, String title, String price, String link, String description) {
@@ -69,26 +71,26 @@ public class WishListService {
         try {
             priceAsInt = Integer.parseInt(price);
         } catch (NumberFormatException _) {}
-        return wishListRepository.updateWish(wishID, title.isEmpty() ? "Ønske uden titel" : title, priceAsInt, link, description);
+        return wishListRepository.updateWish(wishID, title.isEmpty() ? NO_TITLE_WISH.dansk : title, priceAsInt, link, description);
     }
 
     public boolean deleteWishList(HttpSession session, int wishListID, boolean confirm) {
         if (confirm) {
             if (wishListRepository.deleteWishList(wishListID)) return true;
-            session.setAttribute("message", ServiceMessage.UNEXPECTED_OUTPUT);
+            session.setAttribute("message", UNEXPECTED_OUTPUT);
             return false;
         }
-        session.setAttribute("message", ServiceMessage.DELETION_NOT_CONFIRMED);
+        session.setAttribute("message", DELETION_NOT_CONFIRMED);
         return false;
     }
 
     public boolean deleteWish(HttpSession session, int wishID, boolean confirm) {
         if (confirm) {
             if (wishListRepository.deleteWish(wishID)) return true;
-            session.setAttribute("message", ServiceMessage.UNEXPECTED_OUTPUT);
+            session.setAttribute("message", UNEXPECTED_OUTPUT);
             return false;
         }
-        session.setAttribute("message", ServiceMessage.DELETION_NOT_CONFIRMED);
+        session.setAttribute("message", DELETION_NOT_CONFIRMED);
         return false;
     }
 }
