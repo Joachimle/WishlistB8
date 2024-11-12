@@ -71,4 +71,9 @@ public class WishListService {
         } catch (NumberFormatException _) {}
         return wishListRepository.updateWish(wishID, title.isEmpty() ? "Ønske uden titel" : title, priceAsInt, link, description);
     }
+
+    public boolean deleteWishList(int wishListID, boolean confirm) {
+        if (confirm) return wishListRepository.deleteWishList(wishListID);
+        return false;
+    }
 }

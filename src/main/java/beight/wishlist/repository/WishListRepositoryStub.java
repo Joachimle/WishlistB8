@@ -131,4 +131,19 @@ public class WishListRepositoryStub implements WishListRepository {
         }
         return false;
     }
+
+    @Override
+    public boolean deleteWishList(int wishListID) {
+        for (Map.Entry<Integer, List<WishList>> entry : userToWishLists.entrySet()) {
+            List<WishList> wishLists = entry.getValue();
+            for (WishList wishList : wishLists) {
+                if (wishList.wishListID() == wishListID) {
+                    wishLists.remove(wishList);
+                    wishListToWishes.remove(wishListID);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

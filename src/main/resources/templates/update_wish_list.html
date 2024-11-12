@@ -17,5 +17,10 @@
 <hr>
 <a th:href="@{'/onskelister/' + ${wishList.wishListID}}"><button>Fortryd</button></a>
 
+<form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/slet-onskeliste'}" method="post">
+    <label>Bekræft sletning<input type="checkbox" name="confirm"></label>
+    <button type="submit">Slet ønskeliste</button>
+</form>
+
 </body>
 </html>

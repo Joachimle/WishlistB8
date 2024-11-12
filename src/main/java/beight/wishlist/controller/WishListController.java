@@ -94,6 +94,13 @@ public class WishListController {
         return "redirect:/onsker/" + id + "/rediger-onske";
     }
 
+    @PostMapping("/onskelister/{id}/slet-onskeliste")
+    public String deleteWishList(HttpSession session, @PathVariable int id, @RequestParam(required = false) boolean confirm) {
+        if(isNotYourWishList(session, id)) return "redirect:/";
+        if(wishListService.deleteWishList(id, confirm)) return "redirect:/min-side";
+        return "redirect:/onskelister/" + id + "/rediger-onskeliste";
+    }
+
     private boolean isNotLoggedIn(HttpSession session) {
         return session.getAttribute("userProfile") == null;
     }
