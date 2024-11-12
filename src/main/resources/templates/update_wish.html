@@ -9,9 +9,10 @@
 
 <h1>Rediger ønske</h1>
 <form th:action="@{'/onskeliste/' + ${wishListID} + '/onske-redigeret/' + ${wish.wishID}}" method="post">
-    <label>Titel:      <input name="title" th:value="${wish.title}" autofocus></label><br>
-    <label>Pris (DKK): <input type="number" name="price" th:value="${wish.price}"></label><br>
-    <label>Link:       <input type="url" name="link" th:value="${wish.link}"></label><br>
+    <label>Titel:         <input name="title" th:value="${wish.title}" autofocus></label><br>
+    <label>Antal:         <input type="number" name="number" th:value="${wish.numberOfUnits}"></label><br>
+    <label>Pris/stk. dkk: <input type="number" name="price" th:value="${wish.pricePerUnit}"></label><br>
+    <label>Link:          <input type="url" name="link" th:value="${wish.link}"></label><br>
     Beskrivelse:<br><textarea name="description" th:text="${wish.description}"></textarea><br>
     <button type="submit">Gem</button>
 </form>

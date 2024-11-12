@@ -44,8 +44,15 @@ public class WishListController {
 
     @GetMapping("/onskeliste/{id}")
     public String showWishList(HttpSession session, @PathVariable int id, Model model) {
-        if (isNotYourWishList(session, id)) return "redirect:/";
         model.addAttribute("wishList", wishListService.readWishList(id));
+        if (isNotLoggedIn(session)) {
+            model.addAttribute("wishes", wishListService.readWishes(id));
+            return "external_wish_list";
+        }
+        if (isNotYourWishList(session, id)) {
+            model.addAttribute("reservations", wishListService.readReservations(session, id));
+            return "reservation";
+        }
         model.addAttribute("wishes", wishListService.readWishes(id));
         return "wishList";
     }
@@ -59,9 +66,9 @@ public class WishListController {
     }
 
     @PostMapping("/onskeliste/{id}/onske-tilfojet")
-    public String saveNewWish(HttpSession session, @PathVariable int id, @RequestParam String title, @RequestParam String price, @RequestParam String link, @RequestParam String description) {
+    public String saveNewWish(HttpSession session, @PathVariable int id, @RequestParam String title, @RequestParam String number, @RequestParam String price, @RequestParam String link, @RequestParam String description) {
         if (isNotYourWishList(session, id)) return "redirect:/";
-        if (wishListService.createWish(id, title, price, link, description)) return "redirect:/onskeliste/" + id;
+        if (wishListService.createWish(id, title, number, price, link, description)) return "redirect:/onskeliste/" + id;
         return "redirect:/onskeliste/" + id + "/tilfoj-onske";
     }
 
@@ -90,9 +97,9 @@ public class WishListController {
     }
 
     @PostMapping("/onskeliste/{wishListID}/onske-redigeret/{wishID}")
-    public String saveWish(HttpSession session, @PathVariable int wishListID, @PathVariable int wishID, @RequestParam String title, @RequestParam String price, @RequestParam String link, @RequestParam String description) {
+    public String saveWish(HttpSession session, @PathVariable int wishListID, @PathVariable int wishID, @RequestParam String title, @RequestParam String number, @RequestParam String price, @RequestParam String link, @RequestParam String description) {
         if (isNotYourWishList(session, wishListID)) return "redirect:/";
-        if (wishListService.updateWish(wishID, title, price, link, description)) return "redirect:/onskeliste/" + wishListID;
+        if (wishListService.updateWish(wishID, title, number, price, link, description)) return "redirect:/onskeliste/" + wishListID;
         return "redirect:/onskeliste/" + wishListID + "/rediger-onske/" + wishID;
     }
 
@@ -108,6 +115,13 @@ public class WishListController {
         if (isNotYourWishList(session, wishListID)) return "redirect:/";
         if (wishListService.deleteWish(session, wishID, confirm)) return "redirect:/onskeliste/" + wishListID;
         return "redirect:/onskeliste/" + wishListID + "/rediger-onske/" + wishID;
+    }
+
+    @PostMapping("/reservation")
+    public String reservation(HttpSession session, @RequestParam int wishListID, @RequestParam int wishID, @RequestParam int number) {
+        System.out.println(wishID + "  " + number);
+        wishListService.reserve(session, wishID, number);
+        return "redirect:/onskeliste/" + wishListID;
     }
 
     private boolean isNotLoggedIn(HttpSession session) {

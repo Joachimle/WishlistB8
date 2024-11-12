@@ -17,3 +17,7 @@ label {
 hr {
     width: 200px;
 }
+
+input.narrow {
+    width: 40px;
+}

@@ -10,9 +10,10 @@
 <h1>Tilføj ønske</h1>
 <p class="error" th:text="${message}"></p>
 <form th:action="@{'/onskeliste/' + ${wishListID} + '/onske-tilfojet'}" method="post">
-    <label>Titel:      <input name="title" autofocus></label><br>
-    <label>Pris (DKK): <input type="number" name="price"></label><br>
-    <label>Link:       <input type="url" name="link"></label><br>
+    <label>Titel:         <input name="title" autofocus></label><br>
+    <label>Antal:         <input type="number" name="number"></label><br>
+    <label>Pris/stk. dkk: <input type="number" name="price"></label><br>
+    <label>Link:          <input type="url" name="link"></label><br>
     Beskrivelse:<br><textarea name="description"></textarea><br>
     <button type="submit">Gem</button>
 </form>
