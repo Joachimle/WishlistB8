@@ -19,7 +19,6 @@ public class WishListService {
     }
 
     public boolean createWishList(HttpSession session, String title, String description) {
-        // Titel må ikke være tom osv.
         UserProfile userProfile = (UserProfile) session.getAttribute("userProfile");
         return wishListRepository.createWishList(userProfile.userID(), title.isEmpty() ? "Ønskeliste uden titel" : title, description);
     }
@@ -45,5 +44,31 @@ public class WishListService {
 
     public List<Wish> readWishes(int wishListID) {
         return wishListRepository.readWishes(wishListID);
+    }
+
+    public Wish readWish(int wishID) {
+        return wishListRepository.readWish(wishID);
+    }
+
+    public int readWishListIDByWishID(int wishID) {
+        return wishListRepository.readWishListIDByWishID(wishID);
+    }
+
+    public boolean readIfOwnWish(HttpSession session, int wishID) {
+        UserProfile userProfile = (UserProfile) session.getAttribute("userProfile");
+        int userID = wishListRepository.readUserIDByWishID(wishID);
+        return userProfile.userID() == userID;
+    }
+
+    public boolean updateWishList(int wishListID, String title, String description) {
+        return wishListRepository.updateWishList(wishListID, title.isEmpty() ? "Ønskeliste uden titel" : title, description);
+    }
+
+    public boolean updateWish(int wishID, String title, String price, String link, String description) {
+        int priceAsInt = 0;
+        try {
+            priceAsInt = Integer.parseInt(price);
+        } catch (NumberFormatException _) {}
+        return wishListRepository.updateWish(wishID, title.isEmpty() ? "Ønske uden titel" : title, priceAsInt, link, description);
     }
 }

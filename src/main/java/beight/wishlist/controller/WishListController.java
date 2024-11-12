@@ -65,8 +65,41 @@ public class WishListController {
         return "redirect:/onskelister/" + id + "/tilfoj-onske";
     }
 
+    @GetMapping("/onskelister/{id}/rediger-onskeliste")
+    public String updateWishList(HttpSession session, @PathVariable int id, Model model) {
+        if (isNotYourWishList(session, id)) return "redirect:/";
+        model.addAttribute("wishList", wishListService.readWishList(id));
+        return "update_wish_list";
+    }
+
+    @PostMapping("/onskelister/{id}/onskeliste-redigeret")
+    public String saveWishlist(HttpSession session, @PathVariable int id, @RequestParam("title") String title, @RequestParam("description") String description) {
+        if (isNotYourWishList(session, id)) return "redirect:/";
+        if (wishListService.updateWishList(id, title, description)) return "redirect:/onskelister/" + id;
+        return "redirect:/onskelister/" + id + "/rediger-onskeliste";
+    }
+
+    @GetMapping("/onsker/{id}/rediger-onske")
+    public String updateWish(HttpSession session, @PathVariable int id, Model model) {
+        if (isNotYourWish(session, id)) return "redirect:/";
+        model.addAttribute("wish", wishListService.readWish(id));
+        model.addAttribute("wishListID", wishListService.readWishListIDByWishID(id));
+        return "update_wish";
+    }
+
+    @PostMapping("/onsker/{id}/onske-redigeret")
+    public String saveWish(HttpSession session, @PathVariable int id, @RequestParam("title") String title, @RequestParam("price") String price, @RequestParam("link") String link, @RequestParam("description") String description) {
+        if (isNotYourWish(session, id)) return "redirect:/";
+        if (wishListService.updateWish(id, title, price, link, description)) return "redirect:/onskelister/" + wishListService.readWishListIDByWishID(id);
+        return "redirect:/onsker/" + id + "/rediger-onske";
+    }
+
     private boolean isNotLoggedIn(HttpSession session) {
         return session.getAttribute("userProfile") == null;
+    }
+
+    private boolean isNotYourWish(HttpSession session, int wishID) {
+        return !wishListService.readIfOwnWish(session, wishID);
     }
 
     private boolean isNotYourWishList(HttpSession session, int wishListID) {

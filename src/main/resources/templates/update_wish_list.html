@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main.css">
+    <title>Rediger ønskeliste</title>
+</head>
+<body>
+
+<h1>Rediger ønskeliste</h1>
+<p class="error" th:text="${message}"></p>
+<form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/onskeliste-redigeret'}" method="post">
+    <label>Titel: </label><input name="title" th:value="${wishList.title}" autofocus><br>
+    Beskrivelse:<br><textarea name="description" th:text="${wishList.description}"></textarea><br>
+    <button type="submit">Gem</button>
+</form>
+<hr>
+<a th:href="@{'/onskelister/' + ${wishList.wishListID}}"><button>Fortryd</button></a>
+
+</body>
+</html>

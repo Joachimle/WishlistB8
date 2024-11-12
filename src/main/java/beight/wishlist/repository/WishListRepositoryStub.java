@@ -61,4 +61,74 @@ public class WishListRepositoryStub implements WishListRepository {
     public List<Wish> readWishes(int wishListID) {
         return wishListToWishes.get(wishListID);
     }
+
+    @Override
+    public Wish readWish(int wishID) {
+        for (List<Wish> wishes : wishListToWishes.values()) {
+            for (Wish wish : wishes) {
+                if (wish.wishID() == wishID) {
+                    return wish;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public int readWishListIDByWishID(int wishID) {
+        for (Map.Entry<Integer, List<Wish>> entry : wishListToWishes.entrySet()) {
+            int wishListID = entry.getKey();
+            for (Wish wish : entry.getValue()) {
+                if (wish.wishID() == wishID) {
+                    return wishListID;
+                }
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int readUserIDByWishID(int wishID) {
+        for (Map.Entry<Integer, List<WishList>> entry : userToWishLists.entrySet()) {
+            int userID = entry.getKey();
+            for (WishList wishList : entry.getValue()) {
+                for (Wish wish : wishListToWishes.get(wishList.wishListID())) {
+                    if (wish.wishID() == wishID) {
+                        return userID;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean updateWishList(int wishListID, String title, String description) {
+        for (Map.Entry<Integer, List<WishList>> entry : userToWishLists.entrySet()) {
+            List<WishList> wishLists = entry.getValue();
+            for (WishList wishList : wishLists) {
+                if (wishList.wishListID() == wishListID) {
+                    wishLists.remove(wishList);
+                    wishLists.add(new WishList(wishListID, title, description));
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateWish(int wishID, String title, int price, String link, String description) {
+        for (Map.Entry<Integer, List<Wish>> entry : wishListToWishes.entrySet()) {
+            List<Wish> wishes = entry.getValue();
+            for (Wish wish : wishes) {
+                if (wish.wishID() == wishID) {
+                    wishes.remove(wish);
+                    wishes.add(new Wish(wishID, title, price, link, description));
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
