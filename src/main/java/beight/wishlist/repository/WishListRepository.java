@@ -19,10 +19,6 @@ public interface WishListRepository {
 
     Wish readWish(int wishID);
 
-    int readWishListIDByWishID(int wishID);
-
-    int readUserIDByWishID(int wishID);
-
     boolean updateWishList(int wishListID, String title, String description);
 
     boolean updateWish(int wishID, String title, int price, String link, String description);

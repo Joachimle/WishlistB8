@@ -22,15 +22,15 @@ public class WishListService {
 
     public boolean createWishList(HttpSession session, String title, String description) {
         UserProfile userProfile = (UserProfile) session.getAttribute("userProfile");
-        return wishListRepository.createWishList(userProfile.userID(), title.isEmpty() ? "Ønskeliste uden titel" : title, description);
+        return wishListRepository.createWishList(userProfile.userID(), title.isEmpty() ? NO_TITLE_WISH_LIST.dansk : title, description);
     }
 
     public boolean createWish(int wishListID, String title, String price, String link, String description) {
         int priceAsInt = 0;
         try {
-            priceAsInt = Integer.parseInt(price);
+            priceAsInt = Integer.parseUnsignedInt(price);
         } catch (NumberFormatException _) {}
-        return wishListRepository.createWish(wishListID, title.isEmpty() ? "Ønske uden titel" : title, priceAsInt, link, description);
+        return wishListRepository.createWish(wishListID, title.isEmpty() ? NO_TITLE_WISH.dansk : title, priceAsInt, link, description);
     }
 
     public List<WishList> readWishLists(HttpSession session) {
@@ -52,16 +52,6 @@ public class WishListService {
         return wishListRepository.readWish(wishID);
     }
 
-    public int readWishListIDByWishID(int wishID) {
-        return wishListRepository.readWishListIDByWishID(wishID);
-    }
-
-    public boolean readIfOwnWish(HttpSession session, int wishID) {
-        UserProfile userProfile = (UserProfile) session.getAttribute("userProfile");
-        int userID = wishListRepository.readUserIDByWishID(wishID);
-        return userProfile.userID() == userID;
-    }
-
     public boolean updateWishList(int wishListID, String title, String description) {
         return wishListRepository.updateWishList(wishListID, title.isEmpty() ? NO_TITLE_WISH_LIST.dansk : title, description);
     }
@@ -74,8 +64,8 @@ public class WishListService {
         return wishListRepository.updateWish(wishID, title.isEmpty() ? NO_TITLE_WISH.dansk : title, priceAsInt, link, description);
     }
 
-    public boolean deleteWishList(HttpSession session, int wishListID, boolean confirm) {
-        if (confirm) {
+    public boolean deleteWishList(HttpSession session, int wishListID, String confirm) {
+        if (confirm.equals("on")) {
             if (wishListRepository.deleteWishList(wishListID)) return true;
             session.setAttribute("message", UNEXPECTED_OUTPUT);
             return false;
@@ -84,8 +74,8 @@ public class WishListService {
         return false;
     }
 
-    public boolean deleteWish(HttpSession session, int wishID, boolean confirm) {
-        if (confirm) {
+    public boolean deleteWish(HttpSession session, int wishID, String confirm) {
+        if (confirm.equals("on")) {
             if (wishListRepository.deleteWish(wishID)) return true;
             session.setAttribute("message", UNEXPECTED_OUTPUT);
             return false;

@@ -15,7 +15,7 @@
 <p>Dine ønskelister:</p>
 <div th:if="${wishLists.isEmpty}">Du har ingen ønskelister endnu.</div>
 <div th:each="wishList : ${wishLists}">
-    <a th:href="@{'/onskelister/' + ${wishList.wishListID}}" th:text="${wishList.title}"></a>
+    <a th:href="@{'/onskeliste/' + ${wishList.wishListID}}" th:text="${wishList.title}"></a>
 </div>
 <br>
 <a href="/opret-onskeliste"><button>Opret ny ønskeliste</button></a>

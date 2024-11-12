@@ -10,9 +10,9 @@
 <h1>Opret bruger</h1>
 <p class="error" th:text="${message}"></p>
 <form action="/bruger-oprettet" method="post">
-    <label>Nyt brugernavn:      </label><input name="username" autofocus><br>
-    <label>Ny adgangskode:      </label><input type="password" name="password_1" autofocus><br>
-    <label>Ny adgangskode igen: </label><input type="password" name="password_2"><br>
+    <label>Nyt brugernavn:      <input name="username" autofocus></label><br>
+    <label>Ny adgangskode:      <input type="password" name="password_1"></label><br>
+    <label>Ny adgangskode igen: <input type="password" name="password_2"></label><br>
     <button type="submit">Gem</button>
 </form>
 <hr>

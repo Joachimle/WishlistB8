@@ -10,7 +10,7 @@
 <h1>Opret ønskeliste</h1>
 <p class="error" th:text="${message}"></p>
 <form action="/onskeliste-oprettet" method="post">
-    <label>Titel: </label><input name="title" autofocus><br>
+    <label>Titel: <input name="title" autofocus></label><br>
     Beskrivelse:<br><textarea name="description"></textarea><br>
     <button type="submit">Gem</button>
 </form>

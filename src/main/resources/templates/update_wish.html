@@ -8,19 +8,19 @@
 <body>
 
 <h1>Rediger ønske</h1>
-<form th:action="@{'/onsker/' + ${wish.wishID} + '/onske-redigeret'}" method="post">
-    <label>Titel:      </label><input name="title" th:value="${wish.title}" autofocus><br>
-    <label>Pris (DKK): </label><input type="number" name="price" th:value="${wish.price}"><br>
-    <label>Link:       </label><input type="url" name="link" th:value="${wish.link}"><br>
+<form th:action="@{'/onskeliste/' + ${wishListID} + '/onske-redigeret/' + ${wish.wishID}}" method="post">
+    <label>Titel:      <input name="title" th:value="${wish.title}" autofocus></label><br>
+    <label>Pris (DKK): <input type="number" name="price" th:value="${wish.price}"></label><br>
+    <label>Link:       <input type="url" name="link" th:value="${wish.link}"></label><br>
     Beskrivelse:<br><textarea name="description" th:text="${wish.description}"></textarea><br>
     <button type="submit">Gem</button>
 </form>
 <hr>
-<a th:href="@{'/onskelister/' + ${wishListID}}"><button>Fortryd</button></a>
+<a th:href="@{'/onskeliste/' + ${wishListID}}"><button>Fortryd</button></a>
 <hr>
 <p class="error" th:text="${message}"></p>
-<form th:action="@{'/onsker/' + ${wish.wishID} + '/slet'}" method="post">
-    <label>Bekræft sletning: </label><input type="checkbox" name="confirm"><br>
+<form th:action="@{'/onskeliste/' + ${wishListID} + '/slet-onske/' + ${wish.wishID}}" method="post">
+    <label>Bekræft sletning: <input type="checkbox" name="confirm"></label><br>
     <button type="submit">Slet ønske</button>
 </form>
 

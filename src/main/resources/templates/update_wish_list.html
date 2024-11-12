@@ -8,17 +8,17 @@
 <body>
 
 <h1>Rediger ønskeliste</h1>
-<form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/onskeliste-redigeret'}" method="post">
-    <label>Titel: </label><input name="title" th:value="${wishList.title}" autofocus><br>
+<form th:action="@{'/onskeliste/' + ${wishList.wishListID} + '/onskeliste-redigeret'}" method="post">
+    <label>Titel: <input name="title" th:value="${wishList.title}" autofocus></label><br>
     Beskrivelse:<br><textarea name="description" th:text="${wishList.description}"></textarea><br>
     <button type="submit">Gem</button>
 </form>
 <hr>
-<a th:href="@{'/onskelister/' + ${wishList.wishListID}}"><button>Fortryd</button></a>
+<a th:href="@{'/onskeliste/' + ${wishList.wishListID}}"><button>Fortryd</button></a>
 <hr>
 <p class="error" th:text="${message}"></p>
-<form th:action="@{'/onskelister/' + ${wishList.wishListID} + '/slet'}" method="post">
-    <label>Bekræft sletning: </label><input type="checkbox" name="confirm"><br>
+<form th:action="@{'/onskeliste/' + ${wishList.wishListID} + '/slet-onskeliste'}" method="post">
+    <label>Bekræft sletning: <input type="checkbox" name="confirm"></label><br>
     <button type="submit">Slet ønskeliste</button>
 </form>
 
