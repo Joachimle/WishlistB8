@@ -37,13 +37,6 @@ public class UserProfileController {
         return "create_user";
     }
 
-    @GetMapping("/min-side")
-    public String homepage(HttpSession session, Model model) {
-        if (isNotLoggedIn(session)) return "redirect:/";
-        model.addAttribute("username", getUsername(session));
-        return "userpage";
-    }
-
     @GetMapping("/skift-brugernavn")
     public String updateUsernamePage(HttpSession session, Model model) {
         if (isNotLoggedIn(session)) return "redirect:/";
@@ -67,7 +60,7 @@ public class UserProfileController {
     }
 
     @PostMapping("/bruger-slettet")
-    public String deleteUser(HttpSession session, Model model, @RequestParam("password") String password) {
+    public String deleteUser(HttpSession session, Model model, @RequestParam String password) {
         if (isNotLoggedIn(session)) return "redirect:/";
         if (userProfileService.deleteUserProfile(session, password)) {
             model.addAttribute("message", takeDanishMessage(session));
@@ -88,19 +81,19 @@ public class UserProfileController {
     }
 
     @PostMapping("/bruger-oprettet")
-    public String saveUser(HttpSession session, @RequestParam("username") String username, @RequestParam("password_1") String password1, @RequestParam("password_2") String password2) {
+    public String saveUser(HttpSession session, @RequestParam String username, @RequestParam("password_1") String password1, @RequestParam("password_2") String password2) {
         if (userProfileService.createUserProfile(session, username, password1, password2)) return "redirect:/min-side";
         return "redirect:/opret-bruger";
     }
 
     @PostMapping("/logget-ind")
-    public String login(HttpSession session, @RequestParam("username") String username, @RequestParam("password") String password) {
+    public String login(HttpSession session, @RequestParam String username, @RequestParam String password) {
         if (userProfileService.login(session, username, password)) return "redirect:/min-side";
         return "redirect:/log-ind";
     }
 
     @PostMapping("/brugernavn-skiftet")
-    public String saveUsername(HttpSession session, @RequestParam("newUsername") String newUsername, @RequestParam("password") String password) {
+    public String saveUsername(HttpSession session, @RequestParam("new_username") String newUsername, @RequestParam("password") String password) {
         if (isNotLoggedIn(session)) return "redirect:/";
         if (userProfileService.updateUsername(session, password, newUsername)) return "redirect:/min-side";
         return "redirect:/skift-brugernavn";
@@ -108,7 +101,7 @@ public class UserProfileController {
 
     @GetMapping("/log-ud")
     public String logout(HttpSession session, Model model) {
-        model.addAttribute("message", "Der blev logget ud.");
+        model.addAttribute("message", ServiceMessage.LOGGED_OUT.dansk);
         session.invalidate();
         return "message_frontpage";
     }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main.css">
+    <title>Rediger ønske</title>
+</head>
+<body>
+
+<h1>Rediger ønske</h1>
+<form th:action="@{'/onsker/' + ${wish.wishID} + '/onske-redigeret'}" method="post">
+    <label>Titel:      </label><input name="title" th:value="${wish.title}" autofocus><br>
+    <label>Pris (DKK): </label><input type="number" name="price" th:value="${wish.price}"><br>
+    <label>Link:       </label><input type="url" name="link" th:value="${wish.link}"><br>
+    Beskrivelse:<br><textarea name="description" th:text="${wish.description}"></textarea><br>
+    <button type="submit">Gem</button>
+</form>
+<hr>
+<a th:href="@{'/onskelister/' + ${wishListID}}"><button>Fortryd</button></a>
+<hr>
+<p class="error" th:text="${message}"></p>
+<form th:action="@{'/onsker/' + ${wish.wishID} + '/slet'}" method="post">
+    <label>Bekræft sletning: </label><input type="checkbox" name="confirm"><br>
+    <button type="submit">Slet ønske</button>
+</form>
+
+</body>
+</html>

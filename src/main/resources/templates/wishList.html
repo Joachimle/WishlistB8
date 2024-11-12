@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/main.css">
-    <title>Min Ønskeliste</title>
+    <title th:text="${wishList.title}"></title>
 </head>
 <body>
-    <h1>Min Ønskeliste</h1>
-    <a href="/opret-oenske"><button>Tilføj Ønske</button></a>
 
-    <table>
-        <tr>
-            <th>Navn</th>
-            <th>Pris</th>
-            <th>Link</th>
-            <th>Beskrivelse</th>
-        </tr>
-        <tr th:each="wish : ${wishList}">
-            <td th:text="${wish.wishName}"></td>
-            <td th:text="${wish.wishPrice}"></td>
-            <td th:text="${wish.wishLink}"></td>
-            <td th:text="${wish.wishDescription}"></td>
-        </tr>
-    </table>
+<h1 th:text="${wishList.title}"></h1>
+<p th:text="${wishList.description}"></p>
+<a href="/min-side"><button>Tilbage til min side</button></a>
+<a th:href="@{'/onskelister/' + ${wishList.wishListID} + '/rediger-onskeliste'}"><button>Rediger ønskeliste</button></a>
+<a th:href="@{'/onskelister/' + ${wishList.wishListID} + '/tilfoj-onske'}"><button>Tilføj ønske</button></a>
+<p th:if="${wishes.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
+<hr th:unless="${wishes.isEmpty}">
+<div th:each="wish : ${wishes}">
+    <h2 th:text="${wish.title}"></h2>
+    <div th:if="${wish.price > 1}" th:text="${wish.price + ' kr.'}"></div>
+    <a th:if="${wish.link.length > 0}"  th:href="${wish.link}" target="_blank" rel="noopener noreferrer" th:text="${'Link'}"></a>
+    <p th:text="${wish.description}"></p>
+    <a th:href="@{'/onsker/' + ${wish.wishID} + '/rediger-onske'}"><button>Rediger ønske</button></a>
+    <hr>
+</div>
 
-
-
-
-    <a href="/min-side"><button>Gå til min side</button></a>
 </body>
 </html>

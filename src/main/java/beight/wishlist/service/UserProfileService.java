@@ -63,7 +63,6 @@ public class UserProfileService {
                 else {
                     session.setAttribute("message", LOGIN_SUCCESSFUL);
                     session.setAttribute("userProfile", userProfile);
-                    session.setAttribute("wishList", new WishList());
                     return true;
                 }
             }
