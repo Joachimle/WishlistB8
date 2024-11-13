@@ -2,8 +2,12 @@ package beight.wishlist.repository;
 
 import beight.wishlist.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
 
 @Repository("USERPROFILE_REPOSITORY_DB")
 public class UserProfileRepositoryDB implements UserProfileRepository {
@@ -17,36 +21,50 @@ public class UserProfileRepositoryDB implements UserProfileRepository {
 
     @Override
     public UserProfile createUserProfile(String username, String password) {
-        return null;
+        String query = "INSERT INTO user_profile (username, password) VALUES (?, ?)";
+        database.update(query, username, password);
+        return null; //TODO: return null?
     }
 
     @Override
     public Boolean readIfUsernameExists(String username) {
-        return null;
+        String query = "SELECT * FROM userProfile WHERE username = ?";
+        RowMapper<UserProfile> rowMapper = new BeanPropertyRowMapper<>(UserProfile.class);
+        return database.queryForObject(query, rowMapper, username) != null;
     }
 
     @Override
     public UserProfile readUserProfileByUsername(String username) {
-        return null;
+        String query = "SELECT * FROM userProfile WHERE username = ?";
+        RowMapper<UserProfile> rowMapper = new BeanPropertyRowMapper<>(UserProfile.class);
+        return database.queryForObject(query, rowMapper, username);
     }
 
     @Override
     public UserProfile readUserProfileByUserID(int userID) {
-        return null;
+        String query = "SELECT * FROM userProfile WHERE userID = ?";
+        RowMapper<UserProfile> rowMapper = new BeanPropertyRowMapper<>(UserProfile.class);
+        return database.queryForObject(query, rowMapper, userID);
     }
 
     @Override
     public UserProfile updateUsername(int userID, String newUsername) {
-        return null;
+        String query = "UPDATE userProfile SET username = ? WHERE userID = ?";
+        database.update(query, newUsername, userID);
+        return null; //TODO: return null?
     }
 
     @Override
     public UserProfile updatePassword(int userID, String newPassword) {
-        return null;
+        String query = "UPDATE userProfile SET password = ? WHERE userID = ?";
+        database.update(query, newPassword, userID);
+        return null; //TODO: return null?
     }
 
     @Override
     public boolean deleteUserProfile(int userID) {
-        return false;
+        String query = "DELETE FROM userProfile WHERE userID = ?";
+        database.update(query, userID);
+        return true;
     }
 }
