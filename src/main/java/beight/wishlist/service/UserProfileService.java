@@ -1,9 +1,10 @@
 package beight.wishlist.service;
 
 import beight.wishlist.model.UserProfile;
-import beight.wishlist.model.WishList;
 import beight.wishlist.repository.UserProfileRepository;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import static beight.wishlist.service.ServiceMessage.*;
@@ -13,9 +14,8 @@ public class UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
 
-    public UserProfileService(UserProfileRepository userProfileRepository) {
-        this.userProfileRepository = userProfileRepository;
-        // Måske skal denne constructor laves om som i Ians pdf "Interface DI IoC" side 17
+    public UserProfileService(ApplicationContext context, @Value("${userprofile.repository.impl}") String impl) {
+        userProfileRepository = (UserProfileRepository) context.getBean(impl);
     }
 
     private boolean isWrongFormat(String string) {

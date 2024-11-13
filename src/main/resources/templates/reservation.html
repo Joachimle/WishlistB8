@@ -9,7 +9,8 @@
 
 <h1 th:text="${wishList.title}"></h1>
 <p th:text="${wishList.description}"></p>
-<a href="/min-side"><button>Tilbage til min side</button></a>
+<hr th:unless="${description.isBlank}}">
+<a href="/min-side"><button>Tilbage til min side</button></a><a href="/log-ud"><button>Log ud</button></a>
 <p th:if="${reservations.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
 <hr th:unless="${reservations.isEmpty}">
 <div th:each="reservation : ${reservations}">
