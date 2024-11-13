@@ -101,8 +101,7 @@ public class WishListService {
     public void reserveNumber(HttpSession session, int wishID, String number) {
         UserProfile userProfile = (UserProfile) session.getAttribute("userProfile");
         Reservation r = wishListRepository.readReservation(wishID, userProfile.userID());
-        int numberOfUnits = Integer.parseInt(number);
-        // Vi korrigerer, så man ikke kan reservere flere end muligt.
+        int numberOfUnits = Math.max(Integer.parseInt(number), 0);
         int yourReservations = r.otherReservations() + numberOfUnits > r.wish().numberOfUnits() ? r.wish().numberOfUnits() - r.otherReservations() : numberOfUnits;
         wishListRepository.createOrUpdateReservation(wishID, userProfile.userID(), yourReservations);
     }
@@ -112,7 +111,7 @@ public class WishListService {
         Reservation r = wishListRepository.readReservation(wishID, userProfile.userID());
         int yourReservations = r.yourReservations();
         if (unreserve.equals("on")) yourReservations = 0;
-        else if (reserve.equals("on") && r.otherReservations() < 1) yourReservations = 1;
+        else if (reserve.equals("on") && (r.otherReservations() < 1 || r.wish().numberOfUnits() > 1)) yourReservations = 1;
         wishListRepository.createOrUpdateReservation(wishID, userProfile.userID(), yourReservations);
     }
 }

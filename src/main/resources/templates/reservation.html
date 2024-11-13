@@ -16,7 +16,7 @@
     <h2 th:text="${reservation.wish.title}"></h2>
     <div th:if="${reservation.wish.numberOfUnits > 1}" th:text="${'Antal ønskede: ' + reservation.wish.numberOfUnits + ' stk.'}"></div>
     <div th:if="${reservation.wish.numberOfUnits > 1}" th:text="${'Reserveret af andre: ' + reservation.otherReservations + ' stk.'}"></div>
-    <form th:if="${reservation.wish.numberOfUnits > 1}" action="/reservations" method="post">
+    <form th:if="${reservation.wish.numberOfUnits > 1 && reservation.wish.numberOfUnits > reservation.otherReservations}" action="/reservations" method="post">
         <input type="hidden" name="wishListID" th:value="${wishList.wishListID}">
         <input type="hidden" name="wishID" th:value="${reservation.wish.wishID}">
         <label>Reserveret af dig: <input type="number" class="narrow" name="number" th:value="${reservation.yourReservations}"></label>
