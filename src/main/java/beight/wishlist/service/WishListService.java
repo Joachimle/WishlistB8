@@ -6,6 +6,8 @@ import beight.wishlist.model.Wish;
 import beight.wishlist.model.WishList;
 import beight.wishlist.repository.WishListRepository;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class WishListService {
 
     private final WishListRepository wishListRepository;
 
-    public WishListService(WishListRepository wishListRepository) {
-        this.wishListRepository = wishListRepository;
+    public WishListService(ApplicationContext context, @Value("${wishlist.repository.impl}") String impl) {
+        wishListRepository = (WishListRepository) context.getBean(impl);
     }
 
     public boolean createWishList(HttpSession session, String title, String description) {

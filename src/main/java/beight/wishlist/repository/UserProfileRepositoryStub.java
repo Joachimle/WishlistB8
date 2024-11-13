@@ -1,5 +1,6 @@
 package beight.wishlist.repository;
 import beight.wishlist.model.UserProfile;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class UserProfileRepositoryStub implements UserProfileRepository {
         userProfiles = new ArrayList<>();
         next = 0;
         createUserProfile("t", "t");
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
     }
 
     @Override
