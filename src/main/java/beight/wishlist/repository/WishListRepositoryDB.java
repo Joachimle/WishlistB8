@@ -21,12 +21,16 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public boolean createWishList(int userID, String title, String description) {
-        return false;
+        String sql = "INSERT INTO wishList (userID, title, description) VALUES (?, ?, ?)";
+        int affectedRows = database.update(sql, userID, title, description);
+        return affectedRows == 1;
     }
 
     @Override
     public boolean createWish(int wishListID, String title, int numberOfUnits, int pricePerUnit, String link, String description) {
-        return false;
+        String sql = "INSERT INTO wish (wishListID, title, number, price, link, description) VALUES (?, ?, ?, ?, ?, ?)";
+        int affectedRows = database.update(sql, wishListID, title, numberOfUnits, pricePerUnit, link, description);
+        return affectedRows == 1;
     }
 
     @Override
@@ -56,7 +60,12 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public Reservation readReservation(int wishID, int userID) {
-        return null;
+        String own = "SELECT number FROM reservation WHERE wishID = ? AND userID = ?";
+        Integer yourReservations = database.queryForObject(own, Integer.class, userID, wishID);
+        String others = "SELECT sum(number) FROM reservation WHERE wishID = ? AND NOT userID = ?";
+        Integer otherReservations = database.queryForObject(others, Integer.class, userID, wishID);
+        if (yourReservations == null || otherReservations == null) return null;
+        return new Reservation(readWish(wishID), yourReservations, otherReservations);
     }
 
     @Override
