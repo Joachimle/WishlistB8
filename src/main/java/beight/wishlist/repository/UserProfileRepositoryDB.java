@@ -19,7 +19,7 @@ public class UserProfileRepositoryDB implements UserProfileRepository {
     public UserProfile createUserProfile(String username, String password) {
         String query = "INSERT INTO userProfile (username, password) VALUES (?, ?)";
         int rowsAffected = database.update(query, username, password);
-        if (rowsAffected == 0) return null;
+        if (rowsAffected != 1) return null;
         return readUserProfileByUsername(username);
     }
 
@@ -34,13 +34,13 @@ public class UserProfileRepositoryDB implements UserProfileRepository {
     @Override
     public UserProfile readUserProfileByUsername(String username) {
         String query = "SELECT * FROM userProfile WHERE username = ?";
-        return database.queryForObject(query, new UserProfileRowMapper(), username);
+        return database.queryForObject(query, UserProfile.ROW_MAPPER, username);
     }
 
     @Override
     public UserProfile readUserProfileByUserID(int userID) {
         String query = "SELECT * FROM userProfile WHERE userID = ?";
-        return database.queryForObject(query, new UserProfileRowMapper(), userID);
+        return database.queryForObject(query, UserProfile.ROW_MAPPER, userID);
     }
 
     @Override
