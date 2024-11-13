@@ -8,11 +8,10 @@
 <body>
 
 <h1>Skift brugernavn</h1>
-<p>Er du sikker på, at du vil ændre dit brugernavn? Gamle links til dine ønskelister vil holde op med at virke.</p>
 <p class="error" th:text="${message}"></p>
 <form action="/brugernavn-skiftet" method="post">
-    <label>Nyt brugernavn: </label><input name="new_username" th:value="${oldUsername}" autofocus><br>
-    <label>Adgangskode:    </label><input name="password" type="password"><br>
+    <label>Nyt brugernavn: <input name="new_username" th:value="${oldUsername}" autofocus></label><br>
+    <label>Adgangskode:    <input name="password" type="password"></label><br>
     <button type="submit">Gem</button>
 </form>
 <hr>

@@ -12,7 +12,7 @@
 <p>Er du sikker på, at du vil slette din bruger? Al din data vil gå tabt.</p>
 <p class="error" th:text="${message}"></p>
 <form action="/bruger-slettet" method="post">
-    <label>Adgangskode: </label><input name="password" type="password" autofocus><br>
+    <label>Adgangskode: <input name="password" type="password" autofocus></label><br>
     <button type="submit">Slet permanent</button>
 </form>
 <hr>

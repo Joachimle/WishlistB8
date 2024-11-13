@@ -1,5 +1,6 @@
 package beight.wishlist.repository;
 
+import beight.wishlist.model.Reservation;
 import beight.wishlist.model.Wish;
 import beight.wishlist.model.WishList;
 import org.springframework.stereotype.Repository;
@@ -13,14 +14,17 @@ import java.util.Map;
 @Repository("WISHLIST_REPOSITORY_STUB")
 public class WishListRepositoryStub implements WishListRepository {
 
+    private record Reserved(int userID, int reservations) {}
     private final Map<Integer, List<WishList>> userToWishLists;
     private final Map<Integer, List<Wish>> wishListToWishes;
+    private final Map<Integer, List<Reserved>> wishToReservations;
     private int nextWishList;
     private int nextWish;
 
     public WishListRepositoryStub() {
        userToWishLists = new HashMap<>();
        wishListToWishes = new HashMap<>();
+       wishToReservations = new HashMap<>();
        nextWishList = 0;
        nextWish = 0;
     }
@@ -34,9 +38,11 @@ public class WishListRepositoryStub implements WishListRepository {
     }
 
     @Override
-    public boolean createWish(int wishListID, String title, int price, String link, String description) {
+    public boolean createWish(int wishListID, String title, int numberOfUnits, int pricePerUnit, String link, String description) {
         List<Wish> wishes = wishListToWishes.get(wishListID);
-        return wishes.add(new Wish(nextWish++, title, price, link, description));
+        Wish wish = new Wish(nextWish++, title, numberOfUnits, pricePerUnit, link, description);
+        wishToReservations.put(wish.wishID(), new ArrayList<>());
+        return wishes.add(wish);
     }
 
     @Override
@@ -75,31 +81,23 @@ public class WishListRepositoryStub implements WishListRepository {
     }
 
     @Override
-    public int readWishListIDByWishID(int wishID) {
-        for (Map.Entry<Integer, List<Wish>> entry : wishListToWishes.entrySet()) {
-            int wishListID = entry.getKey();
-            for (Wish wish : entry.getValue()) {
-                if (wish.wishID() == wishID) {
-                    return wishListID;
-                }
-            }
+    public List<Reservation> readReservations(int userID, int wishListID) {
+        List<Reservation> reservations = new ArrayList<>();
+        for (Wish wish : wishListToWishes.get(wishListID)) {
+            reservations.add(readReservation(wish.wishID(), userID));
         }
-        return -1;
+        return reservations;
     }
 
     @Override
-    public int readUserIDByWishID(int wishID) {
-        for (Map.Entry<Integer, List<WishList>> entry : userToWishLists.entrySet()) {
-            int userID = entry.getKey();
-            for (WishList wishList : entry.getValue()) {
-                for (Wish wish : wishListToWishes.get(wishList.wishListID())) {
-                    if (wish.wishID() == wishID) {
-                        return userID;
-                    }
-                }
-            }
+    public Reservation readReservation(int wishID, int userID) {
+        int your = 0;
+        int other = 0;
+        for (Reserved r : wishToReservations.get(wishID)) {
+            if (r.userID == userID) your = r.reservations;
+            else other += r.reservations;
         }
-        return -1;
+        return new Reservation(readWish(wishID), your, other);
     }
 
     @Override
@@ -118,18 +116,26 @@ public class WishListRepositoryStub implements WishListRepository {
     }
 
     @Override
-    public boolean updateWish(int wishID, String title, int price, String link, String description) {
+    public boolean updateWish(int wishID, String title, int numberOfUnits, int pricePerUnit, String link, String description) {
         for (Map.Entry<Integer, List<Wish>> entry : wishListToWishes.entrySet()) {
             List<Wish> wishes = entry.getValue();
             for (Wish wish : wishes) {
                 if (wish.wishID() == wishID) {
                     wishes.remove(wish);
-                    wishes.add(new Wish(wishID, title, price, link, description));
+                    wishes.add(new Wish(wishID, title, numberOfUnits, pricePerUnit, link, description));
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean createOrUpdateReservation(int wishID, int userID, int numberOfUnits) {
+        wishToReservations.putIfAbsent(wishID, new ArrayList<>());
+        wishToReservations.get(wishID).removeIf(reserved -> reserved.userID() == userID);
+        wishToReservations.get(wishID).add(new Reserved(userID, numberOfUnits));
+        return true;
     }
 
     @Override
