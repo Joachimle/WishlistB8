@@ -4,7 +4,9 @@ import beight.wishlist.model.Reservation;
 import beight.wishlist.model.Wish;
 import beight.wishlist.model.WishList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,22 +37,30 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public List<WishList> readWishLists(int userID) {
-        return List.of();
+        String query ="SELECT wishList FROM userProfile WHERE userID = ?;";
+        RowMapper rowMapper = new BeanPropertyRowMapper(WishList.class);
+        return database.query(query,rowMapper);
     }
 
     @Override
     public WishList readWishList(int wishListID) {
-        return null;
+        String query ="SELECT * FROM wishList WHERE wishListID = ?;";
+        RowMapper<WishList> rowMapper = new BeanPropertyRowMapper<>(WishList.class);
+        return database.queryForObject(query,rowMapper,wishListID);
     }
 
     @Override
     public List<Wish> readWishes(int wishListID) {
-        return List.of();
+        String query ="SELECT wish FROM wishList WHERE wishListID = ?;";
+        RowMapper rowMapper = new BeanPropertyRowMapper(WishList.class);
+        return database.query(query,rowMapper);
     }
 
     @Override
     public Wish readWish(int wishID) {
-        return null;
+        String query = "SELECT * FROM wish WHERE wishID = ?;";
+        RowMapper<Wish> rowMapper = new BeanPropertyRowMapper<>(Wish.class);
+        return database.queryForObject(query,rowMapper,wishID);
     }
 
     @Override
@@ -70,12 +80,23 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public boolean updateWishList(int wishListID, String title, String description) {
-        return false;
+        String query= "UPDATE wishList" +
+                "SET title = ?," +
+                "SET description = ?;";
+        database.update(query,title,description);
+        return true;
     }
 
     @Override
     public boolean updateWish(int wishID, String title, int numberOfUnits, int pricePerUnit, String link, String description) {
-        return false;
+        String query="UPDATE wish" +
+                "SET title = ?," +
+                "SET numberOfUnits = ?," +
+                "SET pricePerUnit = ?," +
+                "SET link = ?," +
+                "SET description = ?;";
+        database.update(query,title,numberOfUnits,pricePerUnit,link,description)
+        return true;
     }
 
     @Override
@@ -85,11 +106,15 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public boolean deleteWishList(int wishListID) {
-        return false;
+        String query="DELETE FROM wishList WHERE wishListID = ?";
+        database.update(query,wishListID);
+        return true;
     }
 
     @Override
     public boolean deleteWish(int wishID) {
-        return false;
+        String query ="DELETE FROM wish WHERE wishID = ?";
+        database.update(query,wishID);
+        return true;
     }
 }
