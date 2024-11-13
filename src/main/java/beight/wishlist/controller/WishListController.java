@@ -117,10 +117,15 @@ public class WishListController {
         return "redirect:/onskeliste/" + wishListID + "/rediger-onske/" + wishID;
     }
 
+    @PostMapping("/reservations")
+    public String reservation(HttpSession session, @RequestParam int wishListID, @RequestParam int wishID, @RequestParam String number) {
+        wishListService.reserveNumber(session, wishID, number);
+        return "redirect:/onskeliste/" + wishListID;
+    }
+
     @PostMapping("/reservation")
-    public String reservation(HttpSession session, @RequestParam int wishListID, @RequestParam int wishID, @RequestParam int number) {
-        System.out.println(wishID + "  " + number);
-        wishListService.reserve(session, wishID, number);
+    public String reservation(HttpSession session, @RequestParam int wishListID, @RequestParam int wishID, @RequestParam(defaultValue = "off") String reserve, @RequestParam(defaultValue = "off") String unreserve) {
+        wishListService.reserveSingle(session, wishID, reserve, unreserve);
         return "redirect:/onskeliste/" + wishListID;
     }
 
