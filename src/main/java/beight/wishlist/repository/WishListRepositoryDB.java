@@ -23,44 +23,40 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public boolean createWishList(int userID, String title, String description) {
-        String sql = "INSERT INTO wishList (userID, title, description) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO wishList (userID, title, description) VALUES (?, ?, ?);";
         int affectedRows = database.update(sql, userID, title, description);
         return affectedRows == 1;
     }
 
     @Override
     public boolean createWish(int wishListID, String title, int numberOfUnits, int pricePerUnit, String link, String description) {
-        String sql = "INSERT INTO wish (wishListID, title, number, price, link, description) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO wish (wishListID, title, number, price, link, description) VALUES (?, ?, ?, ?, ?, ?);";
         int affectedRows = database.update(sql, wishListID, title, numberOfUnits, pricePerUnit, link, description);
         return affectedRows == 1;
     }
 
     @Override
     public List<WishList> readWishLists(int userID) {
-        String query ="SELECT wishList FROM userProfile WHERE userID = ?;";
-        RowMapper rowMapper = new BeanPropertyRowMapper(WishList.class);
-        return database.query(query,rowMapper);
+        String query ="SELECT * FROM wishList WHERE userID = ?;";
+        return database.query(query, new WishListRowMapper(), userID);
     }
 
     @Override
     public WishList readWishList(int wishListID) {
         String query ="SELECT * FROM wishList WHERE wishListID = ?;";
-        RowMapper<WishList> rowMapper = new BeanPropertyRowMapper<>(WishList.class);
-        return database.queryForObject(query,rowMapper,wishListID);
+        return database.queryForObject(query, new WishListRowMapper(),wishListID);
     }
 
     @Override
     public List<Wish> readWishes(int wishListID) {
-        String query ="SELECT wish FROM wishList WHERE wishListID = ?;";
-        RowMapper rowMapper = new BeanPropertyRowMapper(WishList.class);
-        return database.query(query,rowMapper);
+        String query ="SELECT * FROM wish WHERE wishListID = ?;";
+        return database.query(query, new WishRowMapper(), wishListID);
     }
 
     @Override
     public Wish readWish(int wishID) {
         String query = "SELECT * FROM wish WHERE wishID = ?;";
-        RowMapper<Wish> rowMapper = new BeanPropertyRowMapper<>(Wish.class);
-        return database.queryForObject(query,rowMapper,wishID);
+        return database.queryForObject(query, new WishRowMapper(),wishID);
     }
 
     @Override
@@ -80,23 +76,16 @@ public class WishListRepositoryDB implements WishListRepository {
 
     @Override
     public boolean updateWishList(int wishListID, String title, String description) {
-        String query= "UPDATE wishList" +
-                "SET title = ?," +
-                "SET description = ?;";
-        database.update(query,title,description);
-        return true;
+        String query= "UPDATE wishList SET title = ?, description = ? WHERE wishListID = ?;";
+        int rowsAffected = database.update(query,title, description, wishListID);
+        return rowsAffected == 1;
     }
 
     @Override
     public boolean updateWish(int wishID, String title, int numberOfUnits, int pricePerUnit, String link, String description) {
-        String query="UPDATE wish" +
-                "SET title = ?," +
-                "SET numberOfUnits = ?," +
-                "SET pricePerUnit = ?," +
-                "SET link = ?," +
-                "SET description = ?;";
-        database.update(query,title,numberOfUnits,pricePerUnit,link,description)
-        return true;
+        String query="UPDATE wish SET title = ?, number = ?, price = ?, link = ?, description = ? WHERE wishID = ?;";
+        int rowsAffected = database.update(query,title, numberOfUnits, pricePerUnit, link, description, wishID);
+        return rowsAffected == 1;
     }
 
     @Override
