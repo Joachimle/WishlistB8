@@ -25,15 +25,19 @@ public class UserProfileController {
     }
 
     @GetMapping("/log-ind")
-    public String loginPage(HttpSession session, Model model) {
+    public String loginPage(HttpSession session, Model model, @RequestParam(defaultValue = "frontpage") String onskeliste) {
         if (session.getAttribute("userProfile") != null) return "redirect:/min-side";
         model.addAttribute("message", takeDanishMessage(session));
+        model.addAttribute("onskeliste", onskeliste);
+        model.addAttribute("link", onskeliste.equals("frontpage") ? "/" : ("/onskeliste/" + onskeliste));
         return "login";
     }
 
     @GetMapping("/opret-bruger")
-    public String createUserPage(HttpSession session, Model model) {
+    public String createUserPage(HttpSession session, Model model, @RequestParam(defaultValue = "frontpage") String onskeliste) {
         model.addAttribute("message", takeDanishMessage(session));
+        model.addAttribute("onskeliste", onskeliste);
+        model.addAttribute("link", onskeliste.equals("frontpage") ? "/" : ("/onskeliste/" + onskeliste));
         return "create_user";
     }
 
@@ -81,15 +85,21 @@ public class UserProfileController {
     }
 
     @PostMapping("/bruger-oprettet")
-    public String saveUser(HttpSession session, @RequestParam String username, @RequestParam("password_1") String password1, @RequestParam("password_2") String password2) {
-        if (userProfileService.createUserProfile(session, username, password1, password2)) return "redirect:/min-side";
-        return "redirect:/opret-bruger";
+    public String saveUser(HttpSession session, @RequestParam String onskeliste, @RequestParam String username, @RequestParam("password_1") String password1, @RequestParam("password_2") String password2) {
+        if (userProfileService.createUserProfile(session, username, password1, password2)) {
+            if (onskeliste.equals("frontpage")) return "redirect:/min-side";
+            return "redirect:/onskeliste/" + onskeliste;
+        }
+        return "redirect:/opret-bruger" + (onskeliste.equals("frontpage") ? "" : ("?onskeliste=" + onskeliste));
     }
 
     @PostMapping("/logget-ind")
-    public String login(HttpSession session, @RequestParam String username, @RequestParam String password) {
-        if (userProfileService.login(session, username, password)) return "redirect:/min-side";
-        return "redirect:/log-ind";
+    public String login(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String onskeliste) {
+        if (userProfileService.login(session, username, password)) {
+            if (onskeliste.equals("frontpage")) return "redirect:/min-side";
+            return "redirect:/onskeliste/" + onskeliste;
+        }
+        return "redirect:/log-ind" + (onskeliste.equals("frontpage") ? "" : ("?onskeliste=" + onskeliste));
     }
 
     @PostMapping("/brugernavn-skiftet")

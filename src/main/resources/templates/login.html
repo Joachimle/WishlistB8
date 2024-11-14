@@ -10,12 +10,13 @@
 <h1>Log ind</h1>
 <p class="error" th:text="${message}"></p>
 <form action="/logget-ind" method="post">
+    <input type="hidden" name="onskeliste" th:value="${onskeliste}">
     <label>Brugernavn:  <input name="username" autofocus></label><br>
     <label>Adgangskode: <input name="password" type="password"></label><br>
     <button type="submit">Log ind</button>
 </form>
 <hr>
-<a href="/"><button>Fortryd</button></a>
+<a th:href="@{${link}}"><button>Fortryd</button></a>
 
 </body>
 </html>

@@ -9,11 +9,11 @@
 
 <h1 th:text="${wishList.title}"></h1>
 <p th:text="${wishList.description}"></p>
-<a href="/opret-bruger"><button>Opret bruger</button></a>
-<a href="/log-ind"><button>Log ind</button></a>
-<p th:if="${wishes.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
+<a th:href="@{'/opret-bruger?onskeliste=' + ${wishList.wishListID}}"><button>Opret bruger</button></a>
+<a th:href="@{'/log-ind?onskeliste=' + ${wishList.wishListID}}"><button>Log ind</button></a>
 <p th:unless="${wishes.isEmpty}">Log ind eller opret en bruger for at reservere ønsker.</p>
-<hr th:unless="${wishes.isEmpty}">
+<hr>
+<p th:if="${wishes.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
 <div th:each="wish : ${wishes}">
     <h2 th:text="${wish.title}"></h2>
     <div th:if="${wish.numberOfUnits > 1}" th:text="${'Antal: ' + wish.numberOfUnits + ' stk.'}"></div>

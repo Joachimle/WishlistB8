@@ -10,13 +10,14 @@
 <h1>Opret bruger</h1>
 <p class="error" th:text="${message}"></p>
 <form action="/bruger-oprettet" method="post">
+    <input type="hidden" name="onskeliste" th:value="${onskeliste}">
     <label>Nyt brugernavn:      <input name="username" autofocus></label><br>
     <label>Ny adgangskode:      <input type="password" name="password_1"></label><br>
     <label>Ny adgangskode igen: <input type="password" name="password_2"></label><br>
     <button type="submit">Gem</button>
 </form>
 <hr>
-<a href="/"><button>Fortryd</button></a>
+<a th:href="@{${link}}"><button>Fortryd</button></a>
 
 </body>
 </html>
