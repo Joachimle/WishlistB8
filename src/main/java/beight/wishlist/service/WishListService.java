@@ -32,11 +32,11 @@ public class WishListService {
         int number = 0;
         try {
             number = Integer.parseInt(numberOfUnits);
-        } catch (NumberFormatException _) {}
+        } catch (NumberFormatException e) {}
         int price = 0;
         try {
             price = Integer.parseInt(pricePerUnit);
-        } catch (NumberFormatException _) {}
+        } catch (NumberFormatException e) {}
         return wishListRepository.createWish(wishListID, title.isEmpty() ? NO_TITLE_WISH.dansk : title, Math.max(number, 1), Math.max(price, 0), link, description);
     }
 
@@ -72,11 +72,11 @@ public class WishListService {
         int number = 0;
         try {
             number = Integer.parseInt(numberOfUnits);
-        } catch (NumberFormatException _) {}
+        } catch (NumberFormatException e) {}
         int price = 0;
         try {
             price = Integer.parseInt(pricePerUnit);
-        } catch (NumberFormatException _) {}
+        } catch (NumberFormatException e) {}
         return wishListRepository.updateWish(wishID, title.isEmpty() ? NO_TITLE_WISH.dansk : title, Math.max(number, 1), Math.max(price, 0), link, description);
     }
 
