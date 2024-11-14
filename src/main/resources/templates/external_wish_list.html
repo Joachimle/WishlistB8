@@ -9,10 +9,10 @@
 
 <h1 th:text="${wishList.title}"></h1>
 <p th:text="${wishList.description}"></p>
-<hr th:unless="${description.isBlank}}">
-<p th:unless="${wishes.isEmpty}">Log ind eller opret en bruger på forsiden for at reservere ønsker.</p>
-<a href="/opret-bruger"><button>Opret bruger</button></a><a href="/log-ind"><button>Log ind</button></a>
+<a href="/opret-bruger"><button>Opret bruger</button></a>
+<a href="/log-ind"><button>Log ind</button></a>
 <p th:if="${wishes.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
+<p th:unless="${wishes.isEmpty}">Log ind eller opret en bruger for at reservere ønsker.</p>
 <hr th:unless="${wishes.isEmpty}">
 <div th:each="wish : ${wishes}">
     <h2 th:text="${wish.title}"></h2>

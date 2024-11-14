@@ -9,11 +9,11 @@
 
 <h1 th:text="${wishList.title}"></h1>
 <p th:text="${wishList.description}"></p>
-<hr th:unless="${description.isBlank}}">
-<p>Del denne ønskeliste med andre ved at kopiere adressen i adressefeltet.</p>
-<a href="/min-side"><button>Tilbage til min side</button></a><a href="/log-ud"><button>Log ud</button></a>
+<a href="/min-side"><button>Tilbage til min side</button></a>
+<a href="/log-ud"><button>Log ud</button></a>
 <a th:href="@{'/onskeliste/' + ${wishList.wishListID} + '/rediger-onskeliste'}"><button>Rediger ønskeliste</button></a>
 <a th:href="@{'/onskeliste/' + ${wishList.wishListID} + '/tilfoj-onske'}"><button>Tilføj ønske</button></a>
+<p>Del denne ønskeliste med andre ved at kopiere adressen i adressefeltet.</p>
 <p th:if="${wishes.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
 <hr th:unless="${wishes.isEmpty}">
 <div th:each="wish : ${wishes}">
