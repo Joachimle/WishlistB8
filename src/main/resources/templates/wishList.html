@@ -10,7 +10,7 @@
 <h1 th:text="${wishList.title}"></h1>
 <p th:text="${wishList.description}"></p>
 <a href="/min-side"><button>Gå til min side</button></a>
-<a href="/log-ud"><button>Log ud</button></a>
+<a th:href="@{'/log-ud?onskeliste=' + ${wishList.wishListID}}"><button>Log ud</button></a>
 <a th:href="@{'/onskeliste/' + ${wishList.wishListID} + '/rediger-onskeliste'}"><button>Rediger ønskeliste</button></a>
 <a th:href="@{'/onskeliste/' + ${wishList.wishListID} + '/tilfoj-onske'}"><button>Tilføj ønske</button></a>
 <p>Del denne ønskeliste med andre ved at kopiere adressen i adressefeltet.</p>

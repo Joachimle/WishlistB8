@@ -10,31 +10,39 @@
 <h1 th:text="${wishList.title}"></h1>
 <p th:text="${wishList.description}"></p>
 <a href="/min-side"><button>Gå til min side</button></a>
-<a href="/log-ud"><button>Log ud</button></a>
+<a th:href="@{'/log-ud?onskeliste=' + ${wishList.wishListID}}"><button>Log ud</button></a>
 <hr>
 <p th:if="${reservations.isEmpty}">Denne ønskeliste har ingen ønsker endnu.</p>
 <div th:each="reservation : ${reservations}">
     <h2 th:text="${reservation.wish.title}"></h2>
-    <div th:if="${reservation.wish.numberOfUnits > 1}" th:text="${'Antal ønskede: ' + reservation.wish.numberOfUnits + ' stk.'}"></div>
-    <div th:if="${reservation.wish.numberOfUnits > 1}" th:text="${'Reserveret af andre: ' + reservation.otherReservations + ' stk.'}"></div>
-    <div th:if="${reservation.wish.numberOfUnits > 1 && reservation.yourReservations > 0}" th:text="${'Reserveret af dig: ' + reservation.yourReservations + ' stk.'}"></div>
-    <form th:if="${reservation.wish.numberOfUnits > 1 && reservation.wish.numberOfUnits > reservation.otherReservations}" action="/reservations" method="post">
-        <input type="hidden" name="wishListID" th:value="${wishList.wishListID}">
-        <input type="hidden" name="wishID" th:value="${reservation.wish.wishID}">
-        <label>Reservér antal stk.: <input type="number" class="narrow" name="number"></label>
-        <button type="submit">Gem</button>
-    </form>
+    <div th:if="${reservation.wish.numberOfUnits > 1}">
+        <div th:text="${'Antal ønskede: ' + reservation.wish.numberOfUnits + ' stk.'}"></div>
+        <div th:if="${reservation.otherReservations > 0}" th:text="${'Reserveret af andre: ' + reservation.otherReservations + ' stk.'}"></div>
+        <div th:if="${reservation.yourReservations > 0}" th:text="${'Reserveret af dig: ' + reservation.yourReservations + ' stk.'}"></div>
+    </div>
     <div th:if="${reservation.wish.numberOfUnits < 2 && reservation.otherReservations > 0}" th:text="${'Reserveret af en anden.'}"></div>
-    <form th:if="${reservation.wish.numberOfUnits < 2 && reservation.otherReservations < 1}" action="/reservation" method="post">
-        <input type="hidden" name="wishListID" th:value="${wishList.wishListID}">
-        <input type="hidden" name="wishID" th:value="${reservation.wish.wishID}">
-        <label th:if="${reservation.yourReservations == 0}">Reservér: <input type="checkbox" name="reserve"></label>
-        <label th:if="${reservation.yourReservations == 1}">Fjern din reservation: <input type="checkbox" name="unreserve"></label>
-        <button type="submit">Gem</button>
-    </form>
+    <div th:if="${reservation.wish.numberOfUnits < 2 && reservation.yourReservations > 0}" th:text="${'Reserveret af dig.'}"></div>
     <div th:if="${reservation.wish.pricePerUnit > 0}" th:text="${'Pris pr. stk.: ' + reservation.wish.pricePerUnit + ' kr.'}"></div>
     <a th:if="${reservation.wish.link.length > 0}"  th:href="${reservation.wish.link}" target="_blank" rel="noopener noreferrer" th:text="${'Link'}"></a>
     <p th:text="${reservation.wish.description}"></p>
+    <form th:if="${reservation.wish.numberOfUnits > 1 && reservation.wish.numberOfUnits > reservation.otherReservations}" action="/reservations" method="post">
+        <input type="hidden" name="wishListID" th:value="${wishList.wishListID}">
+        <input type="hidden" name="wishID" th:value="${reservation.wish.wishID}">
+        <label>Reservér <input type="number" class="narrow" name="number"> stk.</label>
+        <button type="submit">Gem</button>
+    </form>
+    <form th:if="${reservation.wish.numberOfUnits < 2 && reservation.otherReservations < 1}" action="/reservation" method="post">
+        <input type="hidden" name="wishListID" th:value="${wishList.wishListID}">
+        <input type="hidden" name="wishID" th:value="${reservation.wish.wishID}">
+        <div th:if="${reservation.yourReservations == 0}">
+            <input type="hidden" name="reserve" value="on">
+            <button type="submit">Reservér</button>
+        </div>
+        <div th:if="${reservation.yourReservations == 1}">
+            <input type="hidden" name="unreserve" value="on">
+            <button type="submit">Fjern din reservation</button>
+        </div>
+    </form>
     <hr>
 </div>
 

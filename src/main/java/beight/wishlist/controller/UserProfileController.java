@@ -110,10 +110,11 @@ public class UserProfileController {
     }
 
     @GetMapping("/log-ud")
-    public String logout(HttpSession session, Model model) {
+    public String logout(HttpSession session, Model model, @RequestParam(defaultValue = "frontpage") String onskeliste) {
         model.addAttribute("message", ServiceMessage.LOGGED_OUT.dansk);
         session.invalidate();
-        return "message_frontpage";
+        if (onskeliste.equals("frontpage")) return "message_frontpage";
+        return "redirect:/onskeliste/" + onskeliste;
     }
 
     private boolean isNotLoggedIn(HttpSession session) {
