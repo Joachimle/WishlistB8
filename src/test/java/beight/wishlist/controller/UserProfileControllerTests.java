@@ -37,7 +37,7 @@ class UserProfileControllerTests {
 
     @Test
     void saveUser() throws Exception {
-        mockMvc.perform(post("/save_user").sessionAttr("userProfile", new UserProfile()))
+        mockMvc.perform(post("/save_user").sessionAttr("userProfile", new UserProfile(0, "u","p")))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
